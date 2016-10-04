@@ -1,0 +1,9 @@
+% di linux
+
+java -cp $HOME/classes JLex.Main Scanner.lex 
+mv Scanner.lex.java Yylex.java
+java -cp $HOME/classes java_cup.Main Parser.cup
+javac -classpath $HOME/classes *.java
+java -classpath .:$HOME/classes parser < tes.txt > tes.out
+java Machine tes.out
+

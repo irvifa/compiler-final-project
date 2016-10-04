@@ -1,0 +1,323 @@
+/** 
+ * JavaCUP Parser for IKI40800
+ *
+ * This parser is constructed based on the grammar given in
+ * http:\\telaga.cs.ui.ac.id\WebKuliah\IKI40800\grammar.html
+ *
+ * Credit to BASA Group (A. Sasmito Adibowo & Bayu A. Prabowo)
+ * for the parser (syntax analysis).
+ *
+ * @author: DAJI Group (Dalton E. Pelawi & Jimmy)
+ */
+
+import java_cup.runtime.*;
+
+parser code {:
+
+    public static void main(String args[]) throws Exception {
+        // semantic analysis handler
+        context = new Context();
+        generate = new Generate();
+        machine = new Machine();
+
+        // check if symbols need to be printed
+        for (int i = 0; i < args.length; i++)
+        {
+            if (args[i].equalsIgnoreCase("-p"))
+                context.setPrint(true);
+        }
+
+        new parser(yylex).parse();
+
+        // print total error found
+        yylex.num_error += context.errorCount;
+        if (yylex.num_error != 0)
+            System.out.println("\n" + yylex.num_error+ " error(s) found.");
+        else
+            machine.memoryDump();
+    }
+
+    public void syntax_error(Symbol cur_token) {
+        report_error("Syntax error at line " + (yylex.getLine()+1) +
+            ": " + yylex.getText(), null);
+        yylex.num_error++;
+    }
+
+    public void unrecovered_syntax_error(Symbol cur_token) {
+        try
+        {
+            yylex.num_error++;
+            report_fatal_error("Syntax error at line " + (yylex.getLine()+1) +
+                ": " + yylex.getText(), null);
+        }
+        catch (Exception e)
+        {
+            System.err.print("\nProcess terminated for unrecovered error.");
+            System.out.println("\n" + yylex.num_error+ " error(s) found.");
+            System.exit(1);
+        }
+    }
+
+    public static Context context;
+    public static Generate generate;
+    public static Machine machine;
+    public static Yylex yylex = new Yylex(System.in);
+:}
+
+
+terminal OPER 
+ADD, AND, ASSGN, DIV, EQ, GT, GTE,
+LPAREN, LT, LTE, MUL, NE, NOT, OR, RPAREN, SUB ; 
+
+terminal KEYW   
+AS, CLOSE, ELSE, END, ENDSTMT, EXIT, FALSE, FUNC, GET, IF, LBRACKET, LISTSEP, 
+LOOP, OPEN, PROC, PUT, RBRACKET, REPEAT, SKIP, THEN, TRUE, UNTIL, RANGESEP,
+VAR ;
+
+terminal TYPE 
+BOOL, INT ;
+
+terminal TOKN
+NUMCONST, STRCONST, IDENT, STRUNCLD ;
+
+terminal DEC;
+        
+nonterminal 
+program, scope, statements, statement, optElse, 
+assignOrCall, assignExpression, subscript, expression, optRelation, 
+lessOrLessEq, greaterOrGreaterEq, simpleExpression, moreTerms, term, 
+moreFactors, factor, primary, subsOrCall, arguments, 
+moreArguments, declarations, moreDeclarations, declaration, funcBody, 
+procBody, type, optArrayBound, parameters, moreParameters, 
+outputs, output, moreOutput, inputs, input, 
+moreInputs, optSubscript, _current, _numconst, _strconst,
+C0, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15,
+C16, C17, C18, C19, C20, C21,
+R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14,
+R15, R16, R17, R18, R19, R20, R21, R22, R23, R24, R25, R26, R27,
+R28, R29, R30, R31, R32, R33, R34, R35, R36, R37, R38, R39, R40,
+R41, R42, R43, R44, R45, R46, R47, R48, R49, R50, R51, R52, R53 ;
+
+
+precedence left EQ, NE, LT, LTE, GT, GTE;   // relational operators
+precedence left ADD, SUB, OR;               // additive
+precedence left MUL, DIV, AND;              // multiplicative
+precedence right NOT;                       // unary
+precedence left LPAREN, RPAREN ;            // parentheses
+
+start with program;
+
+program            ::= scope R38 R0
+                   |   scope error
+                   |   error scope
+                   |   error ;
+
+scope              ::= OPEN C0 R1 declarations C1 R3 ENDSTMT statements C2 R5 CLOSE
+                   |   OPEN ENDSTMT statements CLOSE;
+
+statements         ::= 
+                   |   statement statements
+                   |   error statements ;
+
+statement          ::= _current IDENT C6 assignOrCall
+                   |   IF expression C13 C11 R8 THEN statements optElse END IF
+                   |   REPEAT R11 statements UNTIL expression C13 C11 R18 R8 R12 R10
+                   |   LOOP R11 R53 statements R12 END LOOP R51
+                   |   EXIT R52
+                   |   PUT outputs
+                   |   GET inputs
+                   |   scope ;
+
+optElse            ::= R10
+                   |   ELSE R7 R10 statements R9 ;
+
+assignOrCall       ::= R45 R44 C7
+                   |   LPAREN R45 arguments RPAREN R44 C7
+                   |   ASSGN C20 R31 assignExpression
+                   |   LBRACKET C21 R40 subscript RBRACKET ASSGN assignExpression ;
+
+assignExpression   ::= expression C16 C11 R33 C7 ;
+
+subscript          ::= simpleExpression C12 C11 R41 ;
+
+expression         ::= simpleExpression optRelation;
+
+optRelation        ::=
+                   |   EQ simpleExpression C14 C11 C11 C10 R21
+                   |   NE simpleExpression C14 C11 C11 C10 R22
+                   |   LT lessOrLessEq
+                   |   GT greaterOrGreaterEq
+                   |   GTE simpleExpression C15 C11 C11 C10 R26
+                   |   LTE simpleExpression C15 C11 C11 C10 R24 ;
+ 
+lessOrLessEq       ::= simpleExpression C15 C11 C11 C10 R23
+                   |   EQ simpleExpression C15 C11 C11 C10 R24 ;
+
+greaterOrGreaterEq ::= simpleExpression C15 C11 C11 C10 R25
+                   |   EQ simpleExpression C15 C11 C11 C10 R26 ;
+
+simpleExpression   ::= term moreTerms
+                   |   error moreTerms ; 
+
+moreTerms          ::= 
+                   |   ADD C12 C11 term C12 R14 moreTerms
+                   |   SUB C12 C11 term C12 R15 moreTerms
+                   |   OR C13 C11 term C13 R20 moreTerms ;
+
+term               ::= factor moreFactors ;
+
+moreFactors        ::=
+                   |   MUL C12 C11 factor C12 R16 moreFactors
+                   |   DIV C12 C11 factor C12 R17 moreFactors
+                   |   AND C13 C11 factor C13 R19 moreFactors ;
+
+factor             ::= primary
+                   |   ADD factor C12
+                   |   SUB factor C12 R13
+                   |   NOT factor C13 R18 ;
+
+primary            ::= _numconst NUMCONST C9 R36
+                   |   TRUE C10 R35
+                   |   FALSE C10 R34
+                   |   LPAREN expression RPAREN
+                   |   OPEN C0 R2 declarations C1 R3 ENDSTMT statements ENDSTMT expression C2 R6 CLOSE
+                   |   _current IDENT C6 subsOrCall ;
+
+subsOrCall         ::= R49 C8 R50 C7
+                   |   LPAREN R46 arguments RPAREN C8 R47 C7
+                   |   LBRACKET C21 R40 subscript RBRACKET C8 R32 C7 ;
+
+arguments          ::= expression C11 R48 moreArguments ;
+
+moreArguments      ::= 
+                   |   LISTSEP expression C11 R48 moreArguments ;
+ 
+declarations       ::= declaration moreDeclarations 
+                   |   error moreDeclarations;
+
+moreDeclarations   ::= 
+                   |   declaration moreDeclarations ;
+ 
+declaration        ::= VAR _current IDENT C3 C4 optArrayBound AS type C5 C11 C7
+                   |   type FUNC _current IDENT C3 R7 C5 C0 R2 funcBody
+                   |   PROC _current IDENT C3 R7 C0 R1 procBody ;
+
+funcBody           ::= EQ R4 expression R33 C11 C11 C2 R6 R43 R9 C7
+                   |   LPAREN parameters C1 RPAREN EQ expression C11 C11 R6 R43 R9 C7 ;
+ 
+procBody           ::= scope C2 R5 R42 R9 C7
+                   |   LPAREN parameters C1 RPAREN scope R5 R42 R9 C7 ;
+
+type               ::= INT C9
+                   |   BOOL C10;
+
+optArrayBound      ::= C18 R37
+                   |   LBRACKET simpleExpression C12 C11 R39 RBRACKET C19;
+
+parameters         ::= _current IDENT C3 C4 AS type C5 C11 C7 moreParameters ;
+
+moreParameters     ::= 
+                   |   LISTSEP _current IDENT C3 C4 AS type C5 C11 C7 moreParameters ;
+
+outputs            ::= output moreOutput R30 ;
+
+output             ::= expression C12 C11 R28
+                   |   _strconst STRCONST R29
+                   |   SKIP R30 ;
+ 
+moreOutput         ::=
+                   |   LISTSEP output moreOutput ;
+
+inputs             ::= input moreInputs ;
+
+moreInputs         ::=
+                   |   LISTSEP input moreInputs ;
+
+input              ::= _current IDENT C6 optSubscript C17 R27 C7 ;
+
+optSubscript       ::= C20 R31
+                   |   LBRACKET C21 R40 subscript RBRACKET ;
+
+_current           ::= {: parser.context.setCurrent(parser.yylex.getText(),
+                                                    parser.yylex.getLine()+1); :} ;
+_numconst          ::= {: parser.generate.setConst(parser.yylex.getText()); :} ;
+_strconst          ::= {: parser.generate.setConst((parser.yylex.getText()).substring(1, 
+                                                   (parser.yylex.getText()).length()-1)); :} ;
+
+C0                 ::= {: parser.context.C(0); :} ;
+C1                 ::= {: parser.context.C(1); :} ;
+C2                 ::= {: parser.context.C(2); :} ;
+C3                 ::= {: parser.context.C(3); :} ;
+C4                 ::= {: parser.context.C(4); :} ;
+C5                 ::= {: parser.context.C(5); :} ;
+C6                 ::= {: parser.context.C(6); :} ;
+C7                 ::= {: parser.context.C(7); :} ;
+C8                 ::= {: parser.context.C(8); :} ;
+C9                 ::= {: parser.context.C(9); :} ;
+C10                ::= {: parser.context.C(10); :} ;
+C11                ::= {: parser.context.C(11); :} ;
+C12                ::= {: parser.context.C(12); :} ;
+C13                ::= {: parser.context.C(13); :} ;
+C14                ::= {: parser.context.C(14); :} ;
+C15                ::= {: parser.context.C(15); :} ;
+C16                ::= {: parser.context.C(16); :} ;
+C17                ::= {: parser.context.C(17); :} ;
+C18                ::= {: parser.context.C(18); :} ;
+C19                ::= {: parser.context.C(19); :} ;
+C20                ::= {: parser.context.C(20); :} ;
+C21                ::= {: parser.context.C(21); :} ;
+
+R0                 ::= {: parser.generate.R(0); :} ;
+R1                 ::= {: parser.generate.R(1); :} ;
+R2                 ::= {: parser.generate.R(2); :} ;
+R3                 ::= {: parser.generate.R(3); :} ;
+R4                 ::= {: parser.generate.R(4); :} ;
+R5                 ::= {: parser.generate.R(5); :} ;
+R6                 ::= {: parser.generate.R(6); :} ;
+R7                 ::= {: parser.generate.R(7); :} ;
+R8                 ::= {: parser.generate.R(8); :} ;
+R9                 ::= {: parser.generate.R(9); :} ;
+R10                ::= {: parser.generate.R(10); :} ;
+R11                ::= {: parser.generate.R(11); :} ;
+R12                ::= {: parser.generate.R(12); :} ;
+R13                ::= {: parser.generate.R(13); :} ;
+R14                ::= {: parser.generate.R(14); :} ;
+R15                ::= {: parser.generate.R(15); :} ;
+R16                ::= {: parser.generate.R(16); :} ;
+R17                ::= {: parser.generate.R(17); :} ;
+R18                ::= {: parser.generate.R(18); :} ;
+R19                ::= {: parser.generate.R(19); :} ;
+R20                ::= {: parser.generate.R(20); :} ;
+R21                ::= {: parser.generate.R(21); :} ;
+R22                ::= {: parser.generate.R(22); :} ;
+R23                ::= {: parser.generate.R(23); :} ;
+R24                ::= {: parser.generate.R(24); :} ;
+R25                ::= {: parser.generate.R(25); :} ;
+R26                ::= {: parser.generate.R(26); :} ;
+R27                ::= {: parser.generate.R(27); :} ;
+R28                ::= {: parser.generate.R(28); :} ;
+R29                ::= {: parser.generate.R(29); :} ;
+R30                ::= {: parser.generate.R(30); :} ;
+R31                ::= {: parser.generate.R(31); :} ;
+R32                ::= {: parser.generate.R(32); :} ;
+R33                ::= {: parser.generate.R(33); :} ;
+R34                ::= {: parser.generate.R(34); :} ;
+R35                ::= {: parser.generate.R(35); :} ;
+R36                ::= {: parser.generate.R(36); :} ;
+R37                ::= {: parser.generate.R(37); :} ;
+R38                ::= {: parser.generate.R(38); :} ;
+R39                ::= {: parser.generate.R(39); :} ;
+R40                ::= {: parser.generate.R(40); :} ;
+R41                ::= {: parser.generate.R(41); :} ;
+R42                ::= {: parser.generate.R(42); :} ;
+R43                ::= {: parser.generate.R(43); :} ;
+R44                ::= {: parser.generate.R(44); :} ;
+R45                ::= {: parser.generate.R(45); :} ;
+R46                ::= {: parser.generate.R(46); :} ;
+R47                ::= {: parser.generate.R(47); :} ;
+R48                ::= {: parser.generate.R(48); :} ;
+R49                ::= {: parser.generate.R(49); :} ;
+R50                ::= {: parser.generate.R(50); :} ;
+R51                ::= {: parser.generate.R(51); :} ;
+R52                ::= {: parser.generate.R(52); :} ;
+R53                ::= {: parser.generate.R(53); :} ;
