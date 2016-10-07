@@ -1,3 +1,0 @@
-#!/bin/bash
-
-java java_cup.Main ../modelLangProcInJava/Parser.cup 

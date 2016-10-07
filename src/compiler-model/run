@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # run this
-java JLex.Main modelLangProcInJava/Scanner.lex
-
-java java_cup.Main modelLangProcInJava/Parser.cup
-
+javac JLex/*.java
+javac java_cup/*.java
+cp -r JLex modelLangProcInJava/
+cp -r java_cup modelLangProcInJava/
