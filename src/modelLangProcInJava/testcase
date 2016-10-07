@@ -1,7 +1,7 @@
 #!/bin/bash
 tname="test$1"
 cmd="java parser < testcases/$tname.txt > testcases/$tname.out
-echo $tname.out"
+echo testcases/$tname.out"
 eval $cmd
 cd testcases
 cat $tname.out
