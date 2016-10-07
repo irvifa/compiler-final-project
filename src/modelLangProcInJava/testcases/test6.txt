@@ -1,0 +1,6 @@
+{
+	var a : integer
+	var B[10] : integer;
+
+	get c
+}

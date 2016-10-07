@@ -1,0 +1,10 @@
+{
+	var a : integer
+	var b : integer;
+
+	b := 0
+	a := -1
+	repeat
+	   a := a - 1
+	until a > b
+}
