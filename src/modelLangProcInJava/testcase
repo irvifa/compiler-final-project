@@ -1,6 +1,13 @@
 #!/bin/bash
 tname="test$1"
-cmd="java parser < testcases/$tname.txt > testcases/$tname.out
-echo testcases/$tname.out"
+tdir="testcases"
+cmd="java parser < $tdir/$tname.txt > $tdir/$tname.out
+echo $tdir/$tname.out"
 eval $cmd
-cat testcases/$tname.out
+echo "===== Compile result ====="
+cat $tdir/$tname.out
+echo ""
+echo "===== Run result ====="
+cmd="java Machine $tdir/$tname.out > $tdir/$tname.result"
+eval $cmd
+cat $tdir/$tname.result 

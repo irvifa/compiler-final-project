@@ -1,0 +1,5 @@
+{
+	var a : integer
+	var c[10] : boolean
+	integer func salah = c;
+}

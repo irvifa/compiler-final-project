@@ -4,3 +4,5 @@ $ ./testcase [nomor testcase] di directory ini (modelLangProcIn).
 Misalnya ingin menjalankan testcase nomor 1 dari testcases/test1.txt, maka jalankan ./testcase 1
 
 Hasil test1.out akan muncul di layar dan pada direktori ini.
+
+Lalu, program akan menjalankan hasil program dan menampilkan hasilnya di layar.
