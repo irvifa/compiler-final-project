@@ -1,0 +1,4 @@
+{
+	var a[2048]: integer;
+	put "OK!"
+}

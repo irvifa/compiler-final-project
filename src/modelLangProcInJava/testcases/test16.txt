@@ -1,0 +1,5 @@
+{
+	var a[1661]: integer;
+	a[0]:=15
+	put a[0], " ", "nyan~"
+}

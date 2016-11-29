@@ -1,0 +1,26 @@
+{
+	var min : integer
+	;
+	min := 1
+	{
+		var a : integer
+		var c : integer
+		;
+		
+		a := 4
+		repeat
+		   a := a - 4
+		   c := 0
+		  
+		   loop
+		   	if(c = min) then
+		   		exit
+		   	end if
+		   	
+		   	c := c + 1
+		   end loop
+		   
+		   put a 
+		until a < min
+	}
+}

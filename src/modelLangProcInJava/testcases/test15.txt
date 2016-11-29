@@ -1,0 +1,105 @@
+{
+	var a: integer;
+	a:=0 
+	put a
+	{
+		var a: integer;
+		a:=1 
+		put a
+		{
+			var b: integer;
+			b:=2 
+			put b
+			{
+				var c: integer;
+				c:=3 
+				put c
+				{
+					var d: integer;
+					d:=4 
+					put d
+					{
+						var e: integer;
+						e:=5 
+						put e
+						{
+							var f: integer;
+							f:=6 
+							put f
+							{
+								var g: integer;
+								g:=7 
+								put g
+								{
+									var h: integer;
+									h:=8 
+									put h
+									{
+										var i: integer;
+										i:=9 
+										put i
+										{
+											var j: integer;
+											j:=10 
+											put j
+											{
+												var k: integer;
+												k:=11 
+												put k
+												{
+													var l: integer;
+													l:=12 
+													put l
+													{
+														var m: integer;
+														m:=13 
+														put m
+														{
+															var n: integer;
+															n:=14 
+															put n
+															{
+																var o: integer;
+																o:=15 
+																put o
+																{
+																	var p: integer;
+																	p:=16 
+																	put p
+																	{
+																		var q: integer;
+																		q:=17 
+																		put q
+																		{
+																			var r: integer;
+																			r:=18 
+																			put r
+																			{
+																				var s: integer;
+																				s:=19 
+																				put s
+																				{
+																					var t: integer;
+																					t:=20 
+																					put t
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
