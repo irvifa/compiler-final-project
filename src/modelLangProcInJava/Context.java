@@ -195,6 +195,15 @@ class Context
                         break;
                 }
                 break;
+            case 22:
+                symbolHash.find(currentStr).setLLON(lexicalLevel,-1);
+                break;
+            case 23:
+                break;
+            case 24:
+                //TODO gimana kalau dia proc, kalau dia func, init awal jumlah param =0
+                // sepakati struktur data dulu mau pakai apa
+                break;
         }
     }
 
@@ -230,4 +239,10 @@ class Context
     public static int currentLine;
     private boolean printSymbols;
     public int errorCount;
+    // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
+    public static Stack<Integer> orderNumberStack;
+    // Additional untuk funcc/proc dengan param
+    public static Stack<Integer> paramCountStack;
+    // Stack untuk nama fungsi/proc
+    public static Stack<Integer> calledNameStack;
 }

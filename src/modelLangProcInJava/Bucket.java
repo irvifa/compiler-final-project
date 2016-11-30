@@ -11,6 +11,7 @@ class Bucket
         this.orderNum = UNDEFINED;
         this.idType = UNDEFINED;
         this.idKind = UNDEFINED;
+        this.baseAddress = UNDEFINED;
         this.nextBucket = null;
     }
 
@@ -132,6 +133,30 @@ class Bucket
         return nextBucket;
     }
 
+    // Add setter for baseAddress
+    public void setBaseAddress(int baseAddress)
+    {
+        this.baseAddress = baseAddress;
+    }
+
+    // Add getter for baseAddress
+    public int getBaseAddress()
+    {
+        return this.baseAddress;
+    }
+
+    // Add setter for paramCount
+    public void setParamCount(int paramCount)
+    {
+        this.paramCount = paramCount;
+    }
+
+    // Add getter for paramCount
+    public int getParamCount()
+    {
+        return this.paramCount;
+    }
+
     public static final int INTEGER = 0;
     public static final int BOOLEAN = 1;
     public static final int UNDEFINED = -1;
@@ -147,4 +172,9 @@ class Bucket
     private int idType;
     private int idKind;
     private Bucket nextBucket;
+    //Add base address
+    private int baseAddress;
+    //Add param count: additional req for param
+    private int paramCount;
+    //TODO: add data structure for params
 }
