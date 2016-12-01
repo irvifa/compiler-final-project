@@ -40,6 +40,8 @@ class Context
         switch(ruleNo)
         {
             case 0:
+                // Edit1
+                orderNumberStack.push(orderNumber);
                 lexicalLevel++;
                 orderNumber = 0;
                 break;
@@ -49,6 +51,9 @@ class Context
                 break;
             case 2:
                 symbolHash.delete(lexicalLevel);
+                // Edit1
+                orderNumber = orderNumberStack.peek();
+                orderNumber.pop();
                 lexicalLevel--;
                 break;
             case 3:
@@ -196,13 +201,94 @@ class Context
                 }
                 break;
             case 22:
+                // EDIT1: Push lexicalLevel dan orderLevel
                 symbolHash.find(currentStr).setLLON(lexicalLevel,-1);
                 break;
             case 23:
+                // EDIT1: Udah di-handle C36
                 break;
             case 24:
-                //TODO gimana kalau dia proc, kalau dia func, init awal jumlah param =0
-                // sepakati struktur data dulu mau pakai apa
+                // EDIT1: Masukkan procedure ke dalam table simbol
+                symbolHash.find(currentStr).setIdKind(Bucket.PROCEDURE);
+                break;
+            case 25:
+                // TODO
+                break;
+            case 26:
+                // EDIT1: Masukkan function ke dalam table simbol
+                symbolHash.find(currentStr).setIdKind(Bucket.FUNCTION);
+                break;
+            case 27:
+                // TODO
+                break;
+            case 28:
+                // EDIT1: Check apakah currStr berupa procedure atau bukan
+                switch (symbolHash.find(currentStr).getIdKind())
+                {
+                    case Bucket.UNDEFINED:
+                        System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
+                        errorCount++;
+                        break;
+                    case Bucket.PROCEDURE:
+                        System.out.println("Procedure is not defined expected at line " + currentLine + ": " + currentStr);
+                        errorCount++;
+                        break;
+                }
+                break;
+            case 29:
+                // TODO
+                break;
+            case 30:
+                // TODO
+                break;
+            case 31:
+                // TODO
+                break;
+            case 32:
+                // TODO
+                break;
+            case 33:
+                // EDIT1: Cek apakah merupakan function atau bukan
+                switch (symbolHash.find(currentStr).getIdKind())
+                {
+                    case Bucket.UNDEFINED:
+                        System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
+                        errorCount++;
+                        break;
+                    case Bucket.FUNCTION:
+                        System.out.println("Function is not defined expected at line " + currentLine + ": " + currentStr);
+                        errorCount++;
+                        break;
+                }
+                break;
+            case 34:
+                // TODO
+                break;
+            case 35:
+                // TODO
+                break;
+            case 36:
+                // check apakah return type sudah match dengan expression yang ada dalam function
+                int temp = ((Integer)typeStack.pop()).intValue();
+                if (temp != ((Integer)typeStack.peek()).intValue())
+                {
+                    System.out.println("Unmatched return type at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                }
+                typeStack.push(new Integer(temp));
+                break;
+            case 37:
+                // EDIT1: 
+                
+                break;
+            case 38:
+                // TODO
+                break;
+            case 39:
+                // TODO
+                break;
+            case 40:
+                // EDIT1: sudah di handle di c10 dan c09
                 break;
         }
     }
@@ -241,8 +327,4 @@ class Context
     public int errorCount;
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
-    // Additional untuk funcc/proc dengan param
-    public static Stack<Integer> paramCountStack;
-    // Stack untuk nama fungsi/proc
-    public static Stack<Integer> calledNameStack;
 }
