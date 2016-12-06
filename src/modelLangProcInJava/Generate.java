@@ -743,6 +743,43 @@ class Generate
             case 53:
                 stackPush(loopMarker, R51R52Stack);
                 break;
+
+            // R42: construct instruction for return from procedure
+            case 42:
+                break;
+
+            // R43: construct instruction for return from function
+            case 43:
+                break;
+
+            // R44: construct instruction for call procedure
+            case 44:
+                break;
+
+            // R45: construct instruction for construct block for procedure call
+            case 45:
+                break;
+
+            // R46: construct instruction for construct block for function call
+            case 46:
+                break;
+
+            // R47: construct instruction for call function
+            case 47:
+                break;
+
+            // R48: construct instruction for save arg for procedure & function call
+            case 48:
+                break;
+
+            // R49: construct instruction for if identifier function: R46, else R31
+            case 49:
+                break;
+
+            // R50: construct instruction for if identifier function: R47, else R32
+            case 50:
+                break;
+
         }
     }
 
