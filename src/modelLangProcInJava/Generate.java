@@ -746,10 +746,15 @@ class Generate
 
             // R42: construct instruction for return from procedure
             case 42:
+                HMachine.memory[cell] = HMachine.BR;
+                cell = cell + 1;
                 break;
 
             // R43: construct instruction for return from function
             case 43:
+                HMachine.memory[cell] = HMachine.FLIP;
+                HMachine.memory[cell+1] = HMachine.BR;
+                cell = cell + 2;
                 break;
 
             // R44: construct instruction for call procedure
@@ -770,14 +775,6 @@ class Generate
 
             // R48: construct instruction for save arg for procedure & function call
             case 48:
-                break;
-
-            // R49: construct instruction for if identifier function: R46, else R31
-            case 49:
-                break;
-
-            // R50: construct instruction for if identifier function: R47, else R32
-            case 50:
                 break;
 
         }
