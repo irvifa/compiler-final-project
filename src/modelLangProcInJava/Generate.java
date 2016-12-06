@@ -698,9 +698,9 @@ class Generate
                 kode = Context.symbolHash.find(Context.currentStr).getIdKind();
 
                 if (kode == Bucket.FUNCTION)
-                    System.out.println("Unable to perform function implemetation.");
+                    R(46);
                 else
-                    obtainAddress();
+                    R(31);
 
                 break;
 
@@ -710,12 +710,9 @@ class Generate
                 kode = Context.symbolHash.find(Context.currentStr).getIdKind();
 
                 if (kode == Bucket.FUNCTION)
-                    System.out.println("Unable to perform function implemetation.");
+                    R(47);
                 else
-                {
-                   HMachine.memory[cell] = HMachine.LOAD;
-                   cell = cell + 1;
-                }
+                    R(32);
 
                 break;
 
