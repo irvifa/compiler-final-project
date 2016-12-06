@@ -107,7 +107,7 @@ class Context
                 typeStack.pop();
                 break;
             case 12:
-                switch (((Integer)typeStack.peek()).intValue())
+                /*switch (((Integer)typeStack.peek()).intValue())
                 {
                     case Bucket.BOOLEAN:
                         System.out.println("Type of integer expected at line " + currentLine + ": " + currentStr);
@@ -117,10 +117,17 @@ class Context
                         System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
                         errorCount++;
                         break;
+                }*/
+                if (((Integer)typeStack.peek()).intValue() == Bucket.UNDEFINED) {
+                    System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                } else if (((Integer)typeStack.peek()).intValue() != Bucket.INTEGER) {
+                    System.out.println("Type of integer expected at line " + currentLine + ": " + currentStr);
+                    errorCount++;
                 }
                 break;
             case 13:
-                switch (((Integer)typeStack.peek()).intValue())
+                /*switch (((Integer)typeStack.peek()).intValue())
                 {
                     case Bucket.INTEGER:
                         System.out.println("Type of boolean expected at line " + currentLine + ": " + currentStr);
@@ -130,6 +137,13 @@ class Context
                         System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
                         errorCount++;
                         break;
+                }*/
+                if (((Integer)typeStack.peek()).intValue() == Bucket.UNDEFINED) {
+                    System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                } else if (((Integer)typeStack.peek()).intValue() != Bucket.BOOLEAN) {
+                    System.out.println("Type of boolean expected at line " + currentLine + ": " + currentStr);
+                    errorCount++;
                 }
                 break;
             case 14:
@@ -175,7 +189,7 @@ class Context
                 orderNumber += 3;
                 break;
             case 20:
-                switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
+                /*switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
                 {
                     case Bucket.UNDEFINED:
                         System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
@@ -185,10 +199,17 @@ class Context
                         System.out.println("Scalar variable expected at line " + currentLine + ": " + currentStr);
                         errorCount++;
                         break;
+                }*/
+                if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
+                    System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                } else if (symbolHash.find((String)symbolStack.peek()).getIdKind() != Bucket.SCALAR) {
+                    System.out.println("Scalar variable expected at line " + currentLine + ": " + currentStr);
+                    errorCount++;
                 }
                 break;
             case 21:
-                switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
+                /*switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
                 {
                     case Bucket.UNDEFINED:
                         System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
@@ -198,6 +219,13 @@ class Context
                         System.out.println("Array variable expected at line " + currentLine + ": " + currentStr);
                         errorCount++;
                         break;
+                }*/
+                if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
+                    System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                } else if (symbolHash.find((String)symbolStack.peek()).getIdKind() != Bucket.ARRAY) {
+                    System.out.println("Array variable expected at line " + currentLine + ": " + currentStr);
+                    errorCount++;
                 }
                 break;
             case 22:
@@ -223,7 +251,7 @@ class Context
                 break;
             case 28:
                 // EDIT1: Check apakah currStr berupa procedure atau bukan
-                switch (symbolHash.find(currentStr).getIdKind())
+                /*switch (symbolHash.find(currentStr).getIdKind())
                 {
                     case Bucket.UNDEFINED:
                         System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
@@ -233,6 +261,13 @@ class Context
                         System.out.println("Procedure is not defined expected at line " + currentLine + ": " + currentStr);
                         errorCount++;
                         break;
+                }*/
+                if (symbolHash.find(currentStr).getIdKind() == Bucket.UNDEFINED) {
+                    System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                } else if (symbolHash.find(currentStr).getIdKind() != Bucket.PROCEDURE) {
+                    System.out.println("Procedure is expected at line " + currentLine + ": " + currentStr);
+                    errorCount++;
                 }
                 break;
             case 29:
@@ -249,7 +284,7 @@ class Context
                 break;
             case 33:
                 // EDIT1: Cek apakah merupakan function atau bukan
-                switch (symbolHash.find(currentStr).getIdKind())
+                /*switch (symbolHash.find(currentStr).getIdKind())
                 {
                     case Bucket.UNDEFINED:
                         System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
@@ -259,6 +294,13 @@ class Context
                         System.out.println("Function is not defined expected at line " + currentLine + ": " + currentStr);
                         errorCount++;
                         break;
+                }*/
+                if (symbolHash.find(currentStr).getIdKind() == Bucket.UNDEFINED) {
+                    System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                } else if (symbolHash.find(currentStr).getIdKind() != Bucket.FUNCTION) {
+                    System.out.println("Function is expected at line " + currentLine + ": " + currentStr);
+                    errorCount++;
                 }
                 break;
             case 34:
