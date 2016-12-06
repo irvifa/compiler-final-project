@@ -107,6 +107,7 @@ class Context
                 typeStack.pop();
                 break;
             case 12:
+                // athin
                 /*switch (((Integer)typeStack.peek()).intValue())
                 {
                     case Bucket.BOOLEAN:
@@ -127,6 +128,7 @@ class Context
                 }
                 break;
             case 13:
+                // athin
                 /*switch (((Integer)typeStack.peek()).intValue())
                 {
                     case Bucket.INTEGER:
@@ -189,6 +191,7 @@ class Context
                 orderNumber += 3;
                 break;
             case 20:
+                // athin
                 /*switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
                 {
                     case Bucket.UNDEFINED:
@@ -209,6 +212,7 @@ class Context
                 }
                 break;
             case 21:
+                // athin
                 /*switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
                 {
                     case Bucket.UNDEFINED:
@@ -251,6 +255,7 @@ class Context
                 break;
             case 28:
                 // EDIT1: Check apakah currStr berupa procedure atau bukan
+                // athin
                 /*switch (symbolHash.find(currentStr).getIdKind())
                 {
                     case Bucket.UNDEFINED:
@@ -284,6 +289,7 @@ class Context
                 break;
             case 33:
                 // EDIT1: Cek apakah merupakan function atau bukan
+                // athin
                 /*switch (symbolHash.find(currentStr).getIdKind())
                 {
                     case Bucket.UNDEFINED:
@@ -310,9 +316,11 @@ class Context
                 // TODO
                 break;
             case 36:
-                // check apakah return type sudah match dengan expression yang ada dalam function
-                int temp = ((Integer)typeStack.pop()).intValue();
-                if (temp != ((Integer)typeStack.peek()).intValue())
+                // EDIT2
+                // irvi: check apakah return type sudah match dengan expression yang ada dalam function
+                functionType = symbolHash.find((String)symbolStack.peek()).getIdType();
+                int temp = ((Integer)typeStack.peek()).intValue();
+                if (temp != functionType)
                 {
                     System.out.println("Unmatched return type at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -320,8 +328,17 @@ class Context
                 typeStack.push(new Integer(temp));
                 break;
             case 37:
-                // EDIT1: 
-                
+                // EDIT2: 
+                // irvi: if identifier merupakan suatu fungsi maka C 33 else C20 
+                functionType = symbolHash.find((String)symbolStack.peek()).getIdKind();
+                if(functionType==Bucket.FUNCTION)
+                {
+                    C(33);
+                }
+                else
+                {
+                    C(20);
+                }
                 break;
             case 38:
                 // TODO
@@ -367,6 +384,7 @@ class Context
     public static int currentLine;
     private boolean printSymbols;
     public int errorCount;
+    public int functionType;
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
 }
