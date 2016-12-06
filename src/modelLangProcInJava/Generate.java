@@ -23,7 +23,7 @@ class Generate
           boundStack        = new int[stackSize], // subscript out of range routine
           returnAddrStack   = new int[stackSize]; // fixing up/backpatching return address
 
-    int ll, on, top, addr, kode, cell;
+    public int ll, on, top, addr, kode, cell;
     private String currConst;
 
     public Generate()
@@ -742,6 +742,57 @@ class Generate
             // R53 : construct instruction for start of the loop
             case 53:
                 stackPush(loopMarker, R51R52Stack);
+                break;
+
+            // R42: construct instruction for return from procedure
+            case 42:
+                HMachine.memory[cell] = HMachine.BR;
+                cell = cell + 1;
+                break;
+
+            // R43: construct instruction for return from function
+            case 43:
+                HMachine.memory[cell] = HMachine.FLIP;
+                HMachine.memory[cell+1] = HMachine.BR;
+                cell = cell + 2;
+                break;
+
+            // R44: construct instruction for call procedure
+            case 44:
+                // EDIT2: irvi
+                HMachine.memory[cell] = HMachine.PUSH;
+                //ada 5 instruksi yang akan dipanggil di R44
+                HMachine.memory[cell+1] = cell + 5;
+                HMachine.memory[cell+2] = HMachine.PUSH;
+                HMachine.memory[cell+3] = Context.symbolHash.find((String)Context.symbolStack.peek()).getBaseAddress();
+                HMachine.memory[cell+4] = HMachine.BR;
+                cell = cell + 5;
+                break;
+
+            // R45: construct instruction for construct block for procedure call
+            case 45:
+
+                break;
+
+            // R46: construct instruction for construct block for function call
+            case 46:
+                break;
+
+            // R47: construct instruction for call function
+            case 47:
+                //EDIT 2: irvi
+                //sama aja kayak R44 (?)
+                HMachine.memory[cell] = HMachine.PUSH;
+                //ada 5 instruksi yang akan dipanggil di R44
+                HMachine.memory[cell+1] = cell + 5;
+                HMachine.memory[cell+2] = HMachine.PUSH;
+                HMachine.memory[cell+3] = Context.symbolHash.find((String)Context.symbolStack.peek()).getBaseAddress();
+                HMachine.memory[cell+4] = HMachine.BR;
+                cell = cell + 5;
+                break;
+
+            // R48: construct instruction for save arg for procedure & function call
+            case 48:
                 break;
         }
     }
