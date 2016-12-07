@@ -186,7 +186,7 @@ primary            ::= _numconst NUMCONST C9 R36
                    |   _current IDENT C6 subsOrCall ;
 
 // Edit for subsOrCall, move C33 <- LPAREN
-subsOrCall         ::= C37 R49 C29 C8  c8 R50 C7
+subsOrCall         ::= C37 R49 C29 C8  C8 R50 C7
                    |   C33 LPAREN R46 arguments RPAREN C32 C8 R47 C7
                    |   LBRACKET C21 R40 subscript RBRACKET C8 R32 C7 ;
 

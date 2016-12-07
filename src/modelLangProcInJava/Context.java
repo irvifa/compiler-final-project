@@ -53,7 +53,7 @@ class Context
                 symbolHash.delete(lexicalLevel);
                 // Edit1
                 orderNumber = orderNumberStack.peek();
-                orderNumber.pop();
+                orderNumberStack.pop();
                 lexicalLevel--;
                 break;
             case 3:
@@ -149,7 +149,7 @@ class Context
                 }
                 break;
             case 14:
-                int temp = ((Integer)typeStack.pop()).intValue();
+                temp = ((Integer)typeStack.pop()).intValue();
                 if (temp != ((Integer)typeStack.peek()).intValue())
                 {
                     System.out.println("Unmatched type at line " + currentLine + ": " + currentStr);
@@ -378,13 +378,14 @@ class Context
     public static int lexicalLevel;
     public static int orderNumber;
     public static Hash symbolHash;
-    private Stack symbolStack;
-    private Stack typeStack;
+    public static Stack symbolStack;
+    public static Stack typeStack;
     public static String currentStr;
     public static int currentLine;
     private boolean printSymbols;
     public int errorCount;
     public int functionType;
+    public int temp;
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
 }
