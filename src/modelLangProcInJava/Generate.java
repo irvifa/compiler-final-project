@@ -759,22 +759,47 @@ class Generate
 
             // R44: construct instruction for call procedure
             case 44:
+                // push return address (next pc)
+                HMachine.memory[cell] = HMachine.PUSH;
+                HMachine.memory[cell+1] = cell + 5;
+
+                // push procedure address
+                HMachine.memory[cell+2] = HMachine.PUSH;
+                HMachine.memory[cell+3] = Context.symbolHash.find((String) Context.symbolStack.peek()).getBaseAddr();
+
+                // jump to procedure
+                HMachine.memory[cell+4] = HMachine.BR;
+                cell = cell + 5;
                 break;
 
             // R45: construct instruction for construct block for procedure call
             case 45:
+                // tidak perlu
                 break;
 
             // R46: construct instruction for construct block for function call
             case 46:
+                // tidak perlu
                 break;
 
             // R47: construct instruction for call function
             case 47:
+                // push return address (next pc)
+                HMachine.memory[cell] = HMachine.PUSH;
+                HMachine.memory[cell+1] = cell + 5;
+
+                // push function address
+                HMachine.memory[cell+2] = HMachine.PUSH;
+                HMachine.memory[cell+3] = Context.symbolHash.find((String) Context.symbolStack.peek()).getBaseAddr();
+
+                // jump to function
+                HMachine.memory[cell+4] = HMachine.BR;
+                cell = cell + 5;
                 break;
 
             // R48: construct instruction for save arg for procedure & function call
             case 48:
+                // belum dipakai
                 break;
 
         }
