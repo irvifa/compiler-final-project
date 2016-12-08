@@ -1,8 +1,0 @@
-#!/bin/bash
-# run this
-mkdir JLEX
-cp jlexmain.java JLEX/Main.java
-javac JLex/*.java
-javac java_cup/*.java
-cp -r JLex modelLangProcInJava/
-cp -r java_cup modelLangProcInJava/
