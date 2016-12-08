@@ -16,6 +16,23 @@ import java.util.Stack;
 
 class Context
 {
+
+    private final int HASH_SIZE = 211;
+
+    public static int lexicalLevel;
+    public static int orderNumber;
+    public static Hash symbolHash;
+    public static Stack symbolStack;
+    public static Stack typeStack;
+    public static String currentStr;
+    public static int currentLine;
+    private boolean printSymbols;
+    public int errorCount;
+    public int functionType;
+    public int temp;
+    // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
+    public static Stack<Integer> orderNumberStack;
+
     public Context()
     {
         lexicalLevel = -1;
@@ -23,6 +40,7 @@ class Context
         symbolHash = new Hash(HASH_SIZE);
         symbolStack = new Stack();
         typeStack = new Stack();
+        orderNumberStack = new Stack<Integer>();
         printSymbols = false;
         errorCount = 0;
     }
@@ -384,19 +402,4 @@ class Context
         printSymbols = bool;
     }
 
-    private final int HASH_SIZE = 211;
-
-    public static int lexicalLevel;
-    public static int orderNumber;
-    public static Hash symbolHash;
-    public static Stack symbolStack;
-    public static Stack typeStack;
-    public static String currentStr;
-    public static int currentLine;
-    private boolean printSymbols;
-    public int errorCount;
-    public int functionType;
-    public int temp;
-    // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
-    public static Stack<Integer> orderNumberStack;
 }
