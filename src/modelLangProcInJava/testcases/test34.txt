@@ -1,5 +1,14 @@
 {
-    integer func satu = 1
-    integer func dua = satu+satu;
-    put dua
+	var b: integer
+	integer func nyan = {
+		var a: integer
+		var c: integer
+		;
+		c:= 7 
+		a:= c+b; 
+		a
+	}
+	;
+	b:= 5
+	put nyan
 }

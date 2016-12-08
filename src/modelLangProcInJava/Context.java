@@ -17,6 +17,7 @@ import java.util.Stack;
 class Context {
 
     private final int HASH_SIZE = 211;
+    private final int INIT = -1;
 
     public static int lexicalLevel;
     public static int orderNumber;
@@ -25,6 +26,7 @@ class Context {
     public static Stack typeStack;
     public static String currentStr;
     public static int currentLine;
+    public static int currBaseAddr;
     private boolean printSymbols;
     public int errorCount;
     public int functionType;
@@ -33,7 +35,7 @@ class Context {
     public static Stack<Integer> orderNumberStack;
 
     public Context() {
-        lexicalLevel = -1;
+        lexicalLevel = INIT;
         orderNumber = 0;
         symbolHash = new Hash(HASH_SIZE);
         symbolStack = new Stack();
@@ -51,11 +53,8 @@ class Context {
     public void C(int ruleNo) {
         boolean error = false;
 
-        //System.out.println("C" + ruleNo);
         switch(ruleNo) {
             case 0:
-                // Edit1
-                //orderNumberStack.push(orderNumber);
                 lexicalLevel++;
                 orderNumber = 0;
                 break;
@@ -65,9 +64,6 @@ class Context {
                 break;
             case 2:
                 symbolHash.delete(lexicalLevel);
-                // Edit1
-                //orderNumber = orderNumberStack.peek();
-                //orderNumberStack.pop();
                 lexicalLevel--;
                 break;
             case 3:
@@ -194,7 +190,7 @@ class Context {
                 break;
             case 22:
                 // EDIT1: Push lexicalLevel dan orderLevel
-                symbolHash.find(currentStr).setLLON(lexicalLevel,-1);
+                symbolHash.find(currentStr).setLLON(lexicalLevel,INIT);
                 break;
             case 23:
                 // EDIT1: Udah di-handle C36
@@ -258,7 +254,7 @@ class Context {
                 // EDIT2
                 // irvi: check apakah return type sudah match dengan expression yang ada dalam function
                 functionType = symbolHash.find((String)symbolStack.peek()).getIdType();
-                int temp = ((Integer)typeStack.peek()).intValue();
+                temp = ((Integer)typeStack.peek()).intValue();
                 if (temp != functionType) {
                     System.out.println("Unmatched return type at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -288,8 +284,8 @@ class Context {
                 orderNumber = orderNumberStack.pop();
                 break;
             case 52:
-                int curr = Generate.cell;
-                symbolHash.find(currentStr).setBaseAddress(curr);
+                currBaseAddr = Generate.cell;
+                symbolHash.find(currentStr).setBaseAddress(currBaseAddr);
                 break;
             
         }

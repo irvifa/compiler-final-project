@@ -1,8 +1,14 @@
 {
-	var a : integer
-	integer func nyan = 2*a;
-
-	a:= 2
-	a:= a+nyan
-	put a
+    var a : integer
+    proc nyan {
+        var b : integer;
+        b:= 0
+        repeat
+            a := a + 1
+        until a > b
+        put a
+    }
+    ;
+    a := -1
+    nyan
 }

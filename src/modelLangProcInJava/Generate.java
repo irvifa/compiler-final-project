@@ -6,8 +6,7 @@
  * @author: DAJI Group (Dalton E. Pelawi & Jimmy)
  */
 
-class Generate
-{
+class Generate {
     final int stackSize   = 102,
               loopMarker  = -1,
               scopeMarker = -1;
@@ -26,8 +25,7 @@ class Generate
     public static int ll, on, top, addr, kode, cell;
     private String currConst;
 
-    public Generate()
-    {
+    public Generate() {
         stackInit(R7R9Stack);
         stackInit(R8R10Stack);
         stackInit(R51R52Stack);
@@ -42,24 +40,20 @@ class Generate
         cell = 0;
     }
 
-    void stackInit(int[] stack)
-    {
+    void stackInit(int[] stack) {
         stack[0] = 1;
     }
 
-    void stackPush(int item, int[] stack)
-    {
+    void stackPush(int item, int[] stack) {
         stack[stack[0]] = item;
         stack[0] = stack[0] + 1;
         if (stack[0] > stackSize-1)
             System.out.println("Stack overflow in code generator.");
     }
 
-    int stackPop(int[] stack, int top)
-    {
+    int stackPop(int[] stack, int top) {
         stack[0] = stack[0] - 1;
-        if (stack[0] < 1)
-        {
+        if (stack[0] < 1) {
             System.out.println("Stack underflow in code generator.");
             System.exit(1);
         }
@@ -68,8 +62,7 @@ class Generate
         return top;
     }
 
-    boolean isStackEmpty(int[] stack)
-    {
+    boolean isStackEmpty(int[] stack) {
         boolean flag = false;
 
         if (stack[0] == 1)
@@ -78,8 +71,7 @@ class Generate
         return flag;
     }
 
-    int stackTop(int[] stack)
-    {
+    int stackTop(int[] stack) {
         int ptr;
 
         ptr = stack[0] - 1;
@@ -89,8 +81,7 @@ class Generate
     }
 
     // Method for NOT instruction
-    void emitNot()
-    {
+    void emitNot() {
         HMachine.memory[cell] = HMachine.PUSH;
         HMachine.memory[cell+1] = 0;
         HMachine.memory[cell+2] = HMachine.EQ;
@@ -99,8 +90,7 @@ class Generate
     }
 
     // Method to retrieve the address of a variable
-    void obtainAddress()
-    {
+    void obtainAddress() {
         HMachine.memory[cell] = HMachine.NAME;
         HMachine.memory[cell+1] = 
             Context.symbolHash.find(Context.currentStr).getLexicLev();
@@ -112,10 +102,8 @@ class Generate
 
     // Method to construct a routine to print text,
     // and to backpatch the address which called the routine
-    void createPrintRoutine()
-    {
-        while (!isStackEmpty(printStack))
-        {
+    void createPrintRoutine() {
+        while (!isStackEmpty(printStack)) {
             top = stackPop(printStack, top);
             HMachine.memory[top] = cell;
         }
@@ -144,12 +132,10 @@ class Generate
 
     // Method to construct a division-by-zero error routine,
     // and to backpatch the address which called the routine
-    void createCheckDiv()
-    {
+    void createCheckDiv() {
         char[] message = ("Error division by 0 on line ").toCharArray();
 
-        while (!isStackEmpty(divStack))
-        {
+        while (!isStackEmpty(divStack)) {
             top = stackPop(divStack, top);
             HMachine.memory[top] = cell;
         }
@@ -162,8 +148,7 @@ class Generate
 
         cell = cell + 5;
 
-        for (int i = 0; i < message.length; i++)
-        {
+        for (int i = 0; i < message.length; i++) {
             HMachine.memory[cell] = HMachine.PUSH;
             HMachine.memory[cell+1] = message[message.length - i - 1];
 
@@ -181,12 +166,10 @@ class Generate
 
     // Method to construct an array-index-out-of-bounds error routine,
     // and to backpatch the address which called the routine
-    void createOutOfRangeMessage()
-    {
+    void createOutOfRangeMessage() {
         char[] message = ("Error - subscript out of range on line ").toCharArray();
 
-        while (!isStackEmpty(boundStack))
-        {
+        while (!isStackEmpty(boundStack)) {
             top = stackPop(boundStack, top);
             HMachine.memory[top] = cell;
         }
@@ -196,8 +179,7 @@ class Generate
 
         cell = cell + 2;
 
-        for (int i = 0; i < message.length; i++)
-        {
+        for (int i = 0; i < message.length; i++) {
             HMachine.memory[cell] = HMachine.PUSH;
             HMachine.memory[cell+1] = message[message.length - i - 1];
 
@@ -216,13 +198,11 @@ class Generate
     }
 
     // Method to perform the code generation rules
-    public void R(int ruleNo)
-    {
+    public void R(int ruleNo) {
         String teks;
 
         //System.out.println("R" + ruleNo);
-        switch(ruleNo)
-        {
+        switch(ruleNo) {
             // R0 : assign pc and mt
             case 0:
                 HMachine.mt = cell;
@@ -235,8 +215,7 @@ class Generate
                 ll = Context.lexicalLevel;
                 if (ll > HMachine.displaySize)
                     System.out.println("Too many nested scope.");
-                else
-                {
+                else {
                     HMachine.memory[cell] = HMachine.NAME;
                     HMachine.memory[cell+1] = ll;
                     HMachine.memory[cell+2] = 0;
@@ -255,8 +234,7 @@ class Generate
                 ll = Context.lexicalLevel;
                 if (ll > HMachine.displaySize)
                     System.out.println("Too many nested scope.");
-                else
-                {
+                else {
                     HMachine.memory[cell] = HMachine.PUSH;
                     HMachine.memory[cell+1] = HMachine.undefined;
                     HMachine.memory[cell+2] = HMachine.NAME;
@@ -274,8 +252,7 @@ class Generate
             // R3 : construct instructions to allocate variable
             case 3:
                 on = stackPop(dynamicArrayStack, on);
-                while (!(on == scopeMarker))
-                {
+                while (!(on == scopeMarker)) {
                     HMachine.memory[cell] = HMachine.PUSHMT;
                     HMachine.memory[cell+1] = HMachine.NAME;
                     HMachine.memory[cell+2] = Context.lexicalLevel;
@@ -795,8 +772,7 @@ class Generate
     }
 
     // Method to set the current token
-    public void setConst(String str)
-    {
+    public void setConst(String str) {
         currConst = str;
     }
 }
