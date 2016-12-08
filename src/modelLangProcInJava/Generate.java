@@ -23,7 +23,7 @@ class Generate
           boundStack        = new int[stackSize], // subscript out of range routine
           returnAddrStack   = new int[stackSize]; // fixing up/backpatching return address
 
-    public int ll, on, top, addr, kode, cell;
+    public static int ll, on, top, addr, kode, cell;
     private String currConst;
 
     public Generate()

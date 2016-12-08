@@ -41,7 +41,7 @@ class Context
         {
             case 0:
                 // Edit1
-                orderNumberStack.push(orderNumber);
+                //orderNumberStack.push(orderNumber);
                 lexicalLevel++;
                 orderNumber = 0;
                 break;
@@ -52,8 +52,8 @@ class Context
             case 2:
                 symbolHash.delete(lexicalLevel);
                 // Edit1
-                orderNumber = orderNumberStack.peek();
-                orderNumberStack.pop();
+                //orderNumber = orderNumberStack.peek();
+                //orderNumberStack.pop();
                 lexicalLevel--;
                 break;
             case 3:
@@ -267,10 +267,10 @@ class Context
                         errorCount++;
                         break;
                 }*/
-                if (symbolHash.find(currentStr).getIdKind() == Bucket.UNDEFINED) {
+                if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
-                } else if (symbolHash.find(currentStr).getIdKind() != Bucket.PROCEDURE) {
+                } else if (symbolHash.find((String)symbolStack.peek()).getIdKind() != Bucket.PROCEDURE) {
                     System.out.println("Procedure is expected at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
@@ -301,10 +301,10 @@ class Context
                         errorCount++;
                         break;
                 }*/
-                if (symbolHash.find(currentStr).getIdKind() == Bucket.UNDEFINED) {
+                if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
-                } else if (symbolHash.find(currentStr).getIdKind() != Bucket.FUNCTION) {
+                } else if (symbolHash.find((String)symbolStack.peek()).getIdKind() != Bucket.FUNCTION) {
                     System.out.println("Function is expected at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
@@ -349,6 +349,17 @@ class Context
             case 40:
                 // EDIT1: sudah di handle di c10 dan c09
                 break;
+            case 50:
+                orderNumberStack.push(orderNumber);
+                break;
+            case 51:
+                orderNumber = orderNumberStack.pop();
+                break;
+            case 52:
+                int curr = Generate.cell;
+                symbolHash.find(currentStr).setBaseAddress(curr);
+                break;
+            
         }
     }
 

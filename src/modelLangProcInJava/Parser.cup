@@ -93,7 +93,7 @@ outputs, output, moreOutput, inputs, input,
 moreInputs, optSubscript, _current, _numconst, _strconst,
 C0, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15,
 C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30,
-C31, C32, C33, C34, C35, C36, C37, C38, C39, C40,
+C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C50, C51, C52,
 R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14,
 R15, R16, R17, R18, R19, R20, R21, R22, R23, R24, R25, R26, R27,
 R28, R29, R30, R31, R32, R33, R34, R35, R36, R37, R38, R39, R40,
@@ -186,8 +186,8 @@ primary            ::= _numconst NUMCONST C9 R36
                    |   _current IDENT C6 subsOrCall ;
 
 // Edit for subsOrCall, move C33 <- LPAREN
-subsOrCall         ::= C37 R49 C29 C8  C8 R50 C7
-                   |   C33 LPAREN R46 arguments RPAREN C32 C8 R47 C7
+subsOrCall         ::= C37 R49 C29 C8 C8 R50 C7
+                   |   C33 LPAREN R46 C30 arguments RPAREN C32 C8 R47 C7
                    |   LBRACKET C21 R40 subscript RBRACKET C8 R32 C7 ;
 
 //Edit this
@@ -205,17 +205,18 @@ moreDeclarations   ::=
                    |   declaration moreDeclarations ;
 // TODO
 //  nyiapin return value dkk belum 
+// tambahin order number
 declaration        ::= VAR _current IDENT C3 C4 optArrayBound AS type C5 C11 C7
-                   |   type C40 FUNC _current IDENT C3 C26 R7 C22 C23 C5 C0 R2 funcBody
-                   |   PROC _current IDENT C3 C24 R7 C22 C0 R1 procBody ;
+                   |   type C40 FUNC _current IDENT C3 C26 R7 C22 C23 C5 C50 C52 C0 R2 funcBody
+                   |   PROC _current IDENT C3 C24 R7 C22 C50 C52 C0 R1 procBody ;
 
 // TODO2
-funcBody           ::= EQ R4 expression R33 C11 C11 C2 R6 R43 R9 C7
-                   |   LPAREN parameters C1 RPAREN EQ expression C11 C11 R6 R43 R9 C7 ;
+funcBody           ::= C30 EQ expression C36 C11 C11 C51 C2 R6 R43 R9 C7
+                   |   LPAREN C30 parameters C35 C1 RPAREN EQ expression C36 C11 C11 C27 R6 R43 R9 C7 ;
  
 // TODO
 // offset stack belum
-procBody           ::= C30 scope C2 R5 R42 R9 C7
+procBody           ::= C30 scope C51 C2 R5 R42 R9 C7
                    |   LPAREN C30 parameters C35 C1 RPAREN scope C27 R5 R42 R9 C7 ;
 
 type               ::= INT C9
@@ -297,6 +298,10 @@ C37                ::= {: parser.context.C(37); :} ;
 C38                ::= {: parser.context.C(38); :} ;
 C39                ::= {: parser.context.C(39); :} ;
 C40                ::= {: parser.context.C(40); :} ;
+C50                ::= {: parser.context.C(50); :} ;
+C51                ::= {: parser.context.C(51); :} ;
+C52                ::= {: parser.context.C(52); :} ;
+
 
 R0                 ::= {: parser.generate.R(0); :} ;
 R1                 ::= {: parser.generate.R(1); :} ;
