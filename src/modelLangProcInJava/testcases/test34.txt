@@ -1,0 +1,5 @@
+{
+    integer func satu = 1
+    integer func dua = satu+satu;
+    put dua
+}

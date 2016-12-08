@@ -1,6 +1,6 @@
 {
 	var a : integer
-	integer func nyan = a;
+	integer func nyan = 2*a;
 
 	a:= 2
 	a:= a+nyan

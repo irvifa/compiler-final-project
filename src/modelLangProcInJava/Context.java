@@ -14,8 +14,7 @@
 
 import java.util.Stack;
 
-class Context
-{
+class Context {
 
     private final int HASH_SIZE = 211;
 
@@ -33,8 +32,7 @@ class Context
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
 
-    public Context()
-    {
+    public Context() {
         lexicalLevel = -1;
         orderNumber = 0;
         symbolHash = new Hash(HASH_SIZE);
@@ -50,13 +48,11 @@ class Context
      * @input : ruleNo(type:int)
      * @output: -(type:void)
      */
-    public void C(int ruleNo)
-    {
+    public void C(int ruleNo) {
         boolean error = false;
 
         //System.out.println("C" + ruleNo);
-        switch(ruleNo)
-        {
+        switch(ruleNo) {
             case 0:
                 // Edit1
                 //orderNumberStack.push(orderNumber);
@@ -75,16 +71,13 @@ class Context
                 lexicalLevel--;
                 break;
             case 3:
-                if (symbolHash.isExist(currentStr, lexicalLevel))
-                {
+                if (symbolHash.isExist(currentStr, lexicalLevel)) {
                     System.out.println("Variable declared at line " + currentLine + ": " + currentStr);
                     errorCount++;
                     System.err.println("\nProcess terminated.\nAt least " + (errorCount + parser.yylex.num_error)
                                        + " error(s) detected.");
                     System.exit(1);
-                }
-                else
-                {
+                } else {
                     symbolHash.insert(new Bucket(currentStr));
                 }
                 symbolStack.push(currentStr);
@@ -96,16 +89,13 @@ class Context
                 symbolHash.find(currentStr).setIdType(((Integer)typeStack.peek()).intValue());
                 break;
             case 6:
-                if (!symbolHash.isExist(currentStr))
-                {
+                if (!symbolHash.isExist(currentStr)) {
                     System.out.println("Variable undeclared at line " + currentLine + ": " + currentStr);
                     errorCount++;
                     System.err.println("\nProcess terminated.\nAt least " + (errorCount + parser.yylex.num_error)
                                        + " error(s) detected.");
                     System.exit(1);
-                }
-                else
-                {
+                } else {
                     symbolStack.push(currentStr);
                 }
                 break;
@@ -126,17 +116,6 @@ class Context
                 break;
             case 12:
                 // athin
-                /*switch (((Integer)typeStack.peek()).intValue())
-                {
-                    case Bucket.BOOLEAN:
-                        System.out.println("Type of integer expected at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                    case Bucket.UNDEFINED:
-                        System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                }*/
                 if (((Integer)typeStack.peek()).intValue() == Bucket.UNDEFINED) {
                     System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -147,17 +126,6 @@ class Context
                 break;
             case 13:
                 // athin
-                /*switch (((Integer)typeStack.peek()).intValue())
-                {
-                    case Bucket.INTEGER:
-                        System.out.println("Type of boolean expected at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                    case Bucket.UNDEFINED:
-                        System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                }*/
                 if (((Integer)typeStack.peek()).intValue() == Bucket.UNDEFINED) {
                     System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -168,8 +136,7 @@ class Context
                 break;
             case 14:
                 temp = ((Integer)typeStack.pop()).intValue();
-                if (temp != ((Integer)typeStack.peek()).intValue())
-                {
+                if (temp != ((Integer)typeStack.peek()).intValue()) {
                     System.out.println("Unmatched type at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
@@ -177,8 +144,7 @@ class Context
                 break;
             case 15:
                 temp = ((Integer)typeStack.pop()).intValue();
-                if ((temp != Bucket.INTEGER) && ((Integer)typeStack.peek()).intValue() != Bucket.INTEGER)
-                {
+                if ((temp != Bucket.INTEGER) && ((Integer)typeStack.peek()).intValue() != Bucket.INTEGER) {
                     System.out.println("Unmatched type at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
@@ -186,16 +152,14 @@ class Context
                 break;
             case 16:
                 temp = symbolHash.find((String)symbolStack.peek()).getIdType();
-                if (temp != ((Integer)typeStack.peek()).intValue())
-                {
+                if (temp != ((Integer)typeStack.peek()).intValue()) {
                     System.out.println("Unmatched type at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
                 break;
             case 17:
                 temp = symbolHash.find((String)symbolStack.peek()).getIdType();
-                if (temp != Bucket.INTEGER)
-                {
+                if (temp != Bucket.INTEGER) {
                     System.out.println("Type of integer expected at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
@@ -210,17 +174,6 @@ class Context
                 break;
             case 20:
                 // athin
-                /*switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
-                {
-                    case Bucket.UNDEFINED:
-                        System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                    case Bucket.ARRAY:
-                        System.out.println("Scalar variable expected at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                }*/
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -231,17 +184,6 @@ class Context
                 break;
             case 21:
                 // athin
-                /*switch (symbolHash.find((String)symbolStack.peek()).getIdKind())
-                {
-                    case Bucket.UNDEFINED:
-                        System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                    case Bucket.SCALAR:
-                        System.out.println("Array variable expected at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                }*/
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -274,17 +216,7 @@ class Context
             case 28:
                 // EDIT1: Check apakah currStr berupa procedure atau bukan
                 // athin
-                /*switch (symbolHash.find(currentStr).getIdKind())
-                {
-                    case Bucket.UNDEFINED:
-                        System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                    case Bucket.PROCEDURE:
-                        System.out.println("Procedure is not defined expected at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                }*/
+
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -308,17 +240,6 @@ class Context
             case 33:
                 // EDIT1: Cek apakah merupakan function atau bukan
                 // athin
-                /*switch (symbolHash.find(currentStr).getIdKind())
-                {
-                    case Bucket.UNDEFINED:
-                        System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                    case Bucket.FUNCTION:
-                        System.out.println("Function is not defined expected at line " + currentLine + ": " + currentStr);
-                        errorCount++;
-                        break;
-                }*/
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -338,8 +259,7 @@ class Context
                 // irvi: check apakah return type sudah match dengan expression yang ada dalam function
                 functionType = symbolHash.find((String)symbolStack.peek()).getIdType();
                 int temp = ((Integer)typeStack.peek()).intValue();
-                if (temp != functionType)
-                {
+                if (temp != functionType) {
                     System.out.println("Unmatched return type at line " + currentLine + ": " + currentStr);
                     errorCount++;
                 }
@@ -349,14 +269,8 @@ class Context
                 // EDIT2: 
                 // irvi: if identifier merupakan suatu fungsi maka C 33 else C20 
                 functionType = symbolHash.find((String)symbolStack.peek()).getIdKind();
-                if(functionType==Bucket.FUNCTION)
-                {
-                    C(33);
-                }
-                else
-                {
-                    C(20);
-                }
+                if(functionType==Bucket.FUNCTION) C(33);
+                else C(20);
                 break;
             case 38:
                 // TODO
@@ -386,8 +300,7 @@ class Context
      * @input : str(type:int), line(type:int)
      * @output: -(type:void)
      */
-    public void setCurrent(String str, int line)
-    {
+    public void setCurrent(String str, int line) {
         currentStr = str;
         currentLine = line;
     }
@@ -397,8 +310,7 @@ class Context
      * @input : bool(type:boolean)
      * @output: -(type:void)
      */
-    public void setPrint(boolean bool)
-    {
+    public void setPrint(boolean bool) {
         printSymbols = bool;
     }
 

@@ -204,7 +204,7 @@ declarations       ::= declaration moreDeclarations
 moreDeclarations   ::= 
                    |   declaration moreDeclarations ;
 // TODO
-//  nyiapin return value dkk belum 
+// nyiapin return value dkk belum 
 // tambahin order number
 declaration        ::= VAR _current IDENT C3 C4 optArrayBound AS type C5 C11 C7
                    |   type C40 FUNC _current IDENT C3 C26 R7 C22 C23 C5 C50 C52 C0 R2 funcBody
@@ -298,6 +298,7 @@ C37                ::= {: parser.context.C(37); :} ;
 C38                ::= {: parser.context.C(38); :} ;
 C39                ::= {: parser.context.C(39); :} ;
 C40                ::= {: parser.context.C(40); :} ;
+// supaya lebih reusable
 C50                ::= {: parser.context.C(50); :} ;
 C51                ::= {: parser.context.C(51); :} ;
 C52                ::= {: parser.context.C(52); :} ;
