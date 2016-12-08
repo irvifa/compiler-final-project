@@ -1,6 +1,8 @@
 {
-	var b : integer;
-	b:= 15
+	var a : integer
+	integer func nyan = a;
 
-	put b
+	a:= 2
+	a:= a+nyan
+	put a
 }
