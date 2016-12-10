@@ -1,0 +1,7 @@
+{
+	proc nyan {
+		put "nyan ini pasti compile error~"
+	}
+	;
+	nyan
+}
