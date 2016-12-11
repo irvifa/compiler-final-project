@@ -15,14 +15,11 @@ class Bucket {
     private int idType;
     private int idKind;
     private Bucket nextBucket;
-    //Add base address
-    private int baseAddress;
-    //Add param count: additional req for param
-    private int paramCount;
-
-    public Bucket() {
     
-    }
+    // Add base address
+    private int baseAddress;
+
+    public Bucket() {}
 
     public Bucket(String idName) {
         this.idName = idName;
@@ -144,13 +141,4 @@ class Bucket {
         return this.baseAddress;
     }
 
-    // Add setter for paramCount
-    public void setParamCount(int paramCount) {
-        this.paramCount = paramCount;
-    }
-
-    // Add getter for paramCount
-    public int getParamCount() {
-        return this.paramCount;
-    }
 }
