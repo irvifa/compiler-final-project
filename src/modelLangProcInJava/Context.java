@@ -15,7 +15,6 @@
 import java.util.Stack;
 
 class Context {
-
     private final int HASH_SIZE = 211;
     private final int INIT = -1;
 
@@ -31,6 +30,7 @@ class Context {
     public int errorCount;
     public int functionType;
     public int temp;
+
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
 
@@ -226,7 +226,12 @@ class Context {
                 }
                 break;
             case 29:
-                // TODO
+                // EDIT 2: Check apakah function atau procedure tidak memiliki param
+                int paramCount = symbolHash.find((String)symbolStack.peek()).getParamCount();
+                if(paramCount!=0) {
+                    System.out.println("Procedure or Function in line " + currentLine + ": " + currentStr + " is not expected to have any parameters");
+                    errorCount++;
+                }
                 break;
             case 30:
                 // TODO
@@ -291,7 +296,6 @@ class Context {
                 currBaseAddr = Generate.cell;
                 symbolHash.find(currentStr).setBaseAddress(currBaseAddr);
                 break;
-            
         }
     }
 

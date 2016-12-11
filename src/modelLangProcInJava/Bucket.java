@@ -35,6 +35,7 @@ class Bucket {
         this.idKind = UNDEFINED;
         this.baseAddress = UNDEFINED;
         this.nextBucket = null;
+        this.paramCount = UNDEFINED;
     }
 
     public void setIdName(String idName) {
