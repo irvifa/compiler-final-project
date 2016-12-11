@@ -104,7 +104,6 @@ class Bucket {
                 type = "undefined";
                 break;
         }
-
         return type;
     }
 

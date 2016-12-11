@@ -198,6 +198,8 @@ class Context {
             case 24:
                 // EDIT1: Masukkan procedure ke dalam table simbol
                 symbolHash.find(currentStr).setIdKind(Bucket.PROCEDURE);
+                // EDIT2: Add param to procedure
+                symbolHash.find(currentStr).setParameterList(new LinkedList<Bucket>());
                 break;
             case 25:
                 // TODO
@@ -205,6 +207,8 @@ class Context {
             case 26:
                 // EDIT1: Masukkan function ke dalam table simbol
                 symbolHash.find(currentStr).setIdKind(Bucket.FUNCTION);
+                // EDIT2: Add param to function
+                symbolHash.find(currentStr).setParameterList(new LinkedList<Bucket>());
                 break;
             case 27:
                 // TODO
