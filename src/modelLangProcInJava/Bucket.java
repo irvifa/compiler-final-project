@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 class Bucket {
 
     public static final int INTEGER = 0;
@@ -15,14 +17,15 @@ class Bucket {
     private int idType;
     private int idKind;
     private Bucket nextBucket;
-    //Add base address
-    private int baseAddress;
-    //Add param count: additional req for param
-    private int paramCount;
 
-    public Bucket() {
-    
-    }
+    // Add base address
+    private int baseAddress;
+    // Add param count: additional req for param
+    private int paramCount;
+    // Add list of parameter
+    private LinkedList<Bucket> parameterList;
+
+    public Bucket() {}
 
     public Bucket(String idName) {
         this.idName = idName;
@@ -125,7 +128,6 @@ class Bucket {
                 kind = "undefined";
                 break;
         }
-
         return kind;
     }
 
@@ -152,5 +154,15 @@ class Bucket {
     // Add getter for paramCount
     public int getParamCount() {
         return this.paramCount;
+    }
+
+    // Add setter for list of params
+    public void setParameterList(LinkedList<Bucket> parameterList) {
+        this.parameterList = parameterList;
+    }
+
+    // Add getter for list of params
+    public LinkedList<Bucket> getParameterList() {
+        return this.parameterList;
     }
 }
