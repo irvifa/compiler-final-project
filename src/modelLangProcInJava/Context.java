@@ -111,7 +111,11 @@ class Context {
                 typeStack.pop();
                 break;
             case 12:
-                // athin
+                /**
+                * ATHIN
+                * Lakukan pengecekan apakah entry pada table simbol merupakan Integer atau bukan
+                * jika bukan maka berikan notifikasi error untuk line tersebut
+                */
                 if (((Integer)typeStack.peek()).intValue() == Bucket.UNDEFINED) {
                     System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -121,7 +125,11 @@ class Context {
                 }
                 break;
             case 13:
-                // athin
+                /**
+                * ATHIN
+                * Lakukan pengecekan apakah entry pada table simbol merupakan Boolean atau bukan
+                * jika bukan maka berikan notifikasi error untuk line tersebut
+                */
                 if (((Integer)typeStack.peek()).intValue() == Bucket.UNDEFINED) {
                     System.out.println("Undefined type at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -169,7 +177,11 @@ class Context {
                 orderNumber += 3;
                 break;
             case 20:
-                // athin
+                /**
+                * ATHIN
+                * Lakukan pengecekan apakah entry pada table simbol merupakan Scalar atau bukan
+                * jika bukan maka berikan notifikasi error untuk line tersebut
+                */
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -178,8 +190,12 @@ class Context {
                     errorCount++;
                 }
                 break;
-            case 21:
-                // athin
+            case 21:                
+                /**
+                * ATHIN
+                * Lakukan pengecekan apakah entry pada table simbol merupakan Array atau bukan
+                * jika bukan maka berikan notifikasi error untuk line tersebut
+                */
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Variable not fully defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -189,30 +205,45 @@ class Context {
                 }
                 break;
             case 22:
-                // EDIT1: Push lexicalLevel dan orderLevel
+                /**
+                * IRVI
+                * Lakukan inisiasi lexical level dan order level dari function atau 
+                * procedure ke dalam symbol table
+                */
                 symbolHash.find(currentStr).setLLON(lexicalLevel,INIT);
                 break;
             case 23:
-                // EDIT1: Udah di-handle C36
+                /**
+                * ATHIN & IRVI
+                * Rule ini sudah di handle di C36
+                */
                 break;
             case 24:
-                // EDIT1: Masukkan procedure ke dalam table simbol
+                /**
+                * IRVI
+                * Masukkan procedure ke dalam symbol table
+                */
                 symbolHash.find(currentStr).setIdKind(Bucket.PROCEDURE);
                 break;
             case 25:
                 // TODO
                 break;
             case 26:
-                // EDIT1: Masukkan function ke dalam table simbol
+                /**
+                * IRVI
+                * Masukkan function ke dalam symbol table
+                */
                 symbolHash.find(currentStr).setIdKind(Bucket.FUNCTION);
                 break;
             case 27:
                 // TODO
                 break;
             case 28:
-                // EDIT1: Check apakah currStr berupa procedure atau bukan
-                // athin
-
+                /**
+                * ATHIN
+                * Lakukan pengecekan apakah entry pada table simbol merupakan Procedure atau bukan
+                * jika bukan maka berikan notifikasi error untuk line tersebut
+                */
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Procedure is not defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -234,8 +265,11 @@ class Context {
                 // TODO
                 break;
             case 33:
-                // EDIT1: Cek apakah merupakan function atau bukan
-                // athin
+                /**
+                * ATHIN
+                * Lakukan pengecekan apakah entry pada table simbol merupakan Function atau bukan
+                * jika bukan maka berikan notifikasi error untuk line tersebut
+                */
                 if (symbolHash.find((String)symbolStack.peek()).getIdKind() == Bucket.UNDEFINED) {
                     System.out.println("Function is not defined at line " + currentLine + ": " + currentStr);
                     errorCount++;
@@ -251,8 +285,10 @@ class Context {
                 // TODO
                 break;
             case 36:
-                // EDIT2
-                // irvi: check apakah return type sudah match dengan expression yang ada dalam function
+                /**
+                * ATHIN & IRVI
+                * Check apakah return type sudah match dengan expression yang ada dalam function
+                */
                 functionType = symbolHash.find((String)symbolStack.peek()).getIdType();
                 temp = ((Integer)typeStack.peek()).intValue();
                 if (temp != functionType) {
@@ -262,8 +298,12 @@ class Context {
                 typeStack.push(new Integer(temp));
                 break;
             case 37:
-                // EDIT2: 
-                // irvi: if identifier merupakan suatu fungsi maka C 33 else C20 
+                /**
+                * IRVI
+                * Check apakah identifier yang ada merupakan suatu fungsi atau bukan
+                * jika merupakan suatu fungsi maka terapkan C33
+                * jika bukan, maka terapkan C20
+                */
                 functionType = symbolHash.find((String)symbolStack.peek()).getIdKind();
                 if(functionType==Bucket.FUNCTION) C(33);
                 else C(20);
@@ -275,7 +315,10 @@ class Context {
                 // TODO
                 break;
             case 40:
-                // EDIT1: sudah di handle di c10 dan c09
+                /**
+                * ATHIN & IRVI
+                * Rule ini sudah di-handle di C9 dan C10
+                */
                 break;
             case 50:
                 orderNumberStack.push(orderNumber);
