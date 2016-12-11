@@ -18,13 +18,22 @@ class Bucket {
     private int idKind;
     private Bucket nextBucket;
 
-    // Add base address
+    /**
+    * IRVI
+    * Add base address
+    */ 
     private int baseAddress;
-    // Add param count: additional req for param
+    /**
+    * IRVI
+    * Add base paramCount
+    */ 
     private int paramCount;
-    // Add list of parameter
+    /**
+    * IRVI
+    * Add list of params
+    */ 
     private LinkedList<Bucket> parameterList;
-
+    
     public Bucket() {}
 
     public Bucket(String idName) {
@@ -136,32 +145,50 @@ class Bucket {
         return nextBucket;
     }
 
-    // Add setter for baseAddress
+    /**
+    * IRVI
+    * Add setter for base address
+    */ 
     public void setBaseAddress(int baseAddress) {
         this.baseAddress = baseAddress;
     }
 
-    // Add getter for baseAddress
+    /**
+    * IRVI
+    * Add getter for base address
+    */ 
     public int getBaseAddress() {
         return this.baseAddress;
     }
 
-    // Add setter for paramCount
+    /**
+    * IRVI
+    * Add setter for param count
+    */ 
     public void setParamCount(int paramCount) {
         this.paramCount = paramCount;
     }
 
-    // Add getter for paramCount
+    /**
+    * IRVI
+    * Add getter for param count
+    */ 
     public int getParamCount() {
         return this.paramCount;
     }
 
-    // Add setter for list of params
+    /**
+    * IRVI
+    * Add setter for param list
+    */ 
     public void setParameterList(LinkedList<Bucket> parameterList) {
         this.parameterList = parameterList;
     }
 
-    // Add getter for list of params
+    /**
+    * IRVI
+    * Add getter for param count
+    */ 
     public LinkedList<Bucket> getParameterList() {
         return this.parameterList;
     }

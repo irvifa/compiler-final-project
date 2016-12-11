@@ -1,45 +1,6 @@
-0   NAME 0 0
-3   PUSHMT
-4   SETD 0
-6   PUSH -32768
-8   PUSH -32768
-10   NAME 0 1
-13   PUSH 0
-15   STORE
-16   NAME 0 0
-19   PUSH 1
-21   PUSH 0
-23   FLIP
-24   SUB
-25   STORE
-26   NAME 0 0
-29   NAME 0 0
-32   LOAD
-33   PUSH 1
-35   ADD
-36   STORE
-37   NAME 0 0
-40   LOAD
-41   NAME 0 1
-44   LOAD
-45   FLIP
-46   LT
-47   PUSH 0
-49   EQ
-50   PUSH 56
-52   BF
-53   PUSH 26
-55   BR
-56   NAME 0 0
-59   LOAD
-60   PRINTI
-61   PUSH 10
-63   PUSH 13
-65   PRINTC
-66   PRINTC
-67   PUSHMT
-68   NAME 0 0
-71   SUB
-72   POP
-73   SETD 0
-75   HALT
+Procedure or Function in line 8: a is not expected to have any parameters
+Procedure or Function in line 9: a is not expected to have any parameters
+Procedure or Function in line 9: b is not expected to have any parameters
+Procedure or Function in line 10: a is not expected to have any parameters
+
+4 error(s) found.

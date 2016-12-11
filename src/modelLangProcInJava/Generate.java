@@ -22,6 +22,11 @@ class Generate {
           boundStack        = new int[stackSize], // subscript out of range routine
           returnAddrStack   = new int[stackSize]; // fixing up/backpatching return address
 
+    /**
+    * IRVI
+    * Make the identifier as public static, jadi callable dari kelas lain
+    * ini dibutuhkan untuk set base adress-nya dari Context.java
+    */
     public static int ll, on, top, addr, kode, cell;
     private String currConst;
 
@@ -717,21 +722,30 @@ class Generate {
             case 53:
                 stackPush(loopMarker, R51R52Stack);
                 break;
-
-            // R42: construct instruction for return from procedure
+            
+            /**
+            * TERE
+            * Construct instruction for return from procedure
+            */
             case 42:
                 HMachine.memory[cell] = HMachine.BR;
                 cell = cell + 1;
                 break;
-
-            // R43: construct instruction for return from function
+            
+            /**
+            * TERE
+            * Construct instruction for return from function
+            */
             case 43:
                 HMachine.memory[cell] = HMachine.FLIP;
                 HMachine.memory[cell+1] = HMachine.BR;
                 cell = cell + 2;
                 break;
 
-            // R44: construct instruction for call procedure
+            /**
+            * IRVI
+            * Construct instruction for call procedure
+            */
             case 44:
                 // EDIT2: irvi
                 HMachine.memory[cell] = HMachine.PUSH;
@@ -752,7 +766,10 @@ class Generate {
             case 46:
                 break;
 
-            // R47: construct instruction for call function
+            /**
+            * IRVI
+            * Construct instruction for call function
+            */
             case 47:
                 //EDIT 2: irvi
                 //sama aja kayak R44 (?)
