@@ -18,6 +18,7 @@ import java.util.LinkedList;
 class Context {
     private final int HASH_SIZE = 211;
     private final int INIT = -1;
+    private final int INIT_PARAM = 0;
 
     public static int lexicalLevel;
     public static int orderNumber;
@@ -32,8 +33,15 @@ class Context {
     public int functionType;
     public int temp;
 
-    // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
+    /**
+    * IRVI: Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
+    */
     public static Stack<Integer> orderNumberStack;
+
+    /**
+    * IRVI 2: Stack untuk memasukkan jumlah args
+    */
+    public static Stack<Integer> argumentCountStack;
 
     public Context() {
         lexicalLevel = INIT;
@@ -42,6 +50,7 @@ class Context {
         symbolStack = new Stack();
         typeStack = new Stack();
         orderNumberStack = new Stack<Integer>();
+        argumentCountStack = new Stack<Integer>();
         printSymbols = false;
         errorCount = 0;
     }
@@ -261,7 +270,7 @@ class Context {
                 break;
             case 29:
                 /**
-                * IRVI 2
+                * IRVI 2\3
                 * Check apakah function atau procedure tidak memiliki param
                 */
                 int paramCount = symbolHash.find((String)symbolStack.peek()).getParamCount();
@@ -271,13 +280,27 @@ class Context {
                 }
                 break;
             case 30:
-                // TODO
+                /**
+                * IRVI 2
+                * Push jumlah parameter = 0
+                */
+                argumentCountStack.push(INIT_PARAM);
                 break;
             case 31:
                 // TODO
                 break;
             case 32:
-                // TODO
+                /**
+                * IRVI 3
+                * Periksa apakah sudah dilihat apa belum
+                * pop jumalh argument
+                */
+                int currCount = argumentCountStack.pop();
+                int paramCount = symbolHash.find((String)symbolStack.peek()).getParamCount();
+                if(currCount!=paramCount) {
+                    System.out.println("Unmatched number of arguments on line " + currentLine + ": " + currentStr);
+                    errorCount++;
+                }
                 break;
             case 33:
                 /**
@@ -294,7 +317,13 @@ class Context {
                 }
                 break;
             case 34:
-                // TODO
+                /**
+                * IRVI 3
+                * Tambahkan nilai jumlah argument (?)
+                */
+                int paramCount = argumentCountStack.pop();
+                paramCount++;
+                argumentCountStack.push(paramCount);
                 break;
             case 35:
                 // TODO
