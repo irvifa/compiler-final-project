@@ -1,0 +1,13 @@
+# Lokal vs Global var (exp: 5)
+{
+	var a : integer
+  ;
+  proc nyan {
+    var a : integer
+    ;
+    a := 3
+  }
+  a := 5
+  nyan
+  put a
+}
