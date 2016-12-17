@@ -6,7 +6,7 @@
         put b
         b := b - 1
         haha
-      end
+      end if
     }
     ;
     b := 3
