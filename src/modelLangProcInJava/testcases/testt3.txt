@@ -1,0 +1,12 @@
+{
+  	proc luar {
+   	 	proc dalam {
+   	 		;
+      		put "dalam"
+    	}
+    	;
+    	dalam
+  	}
+  	;
+  	luar
+}

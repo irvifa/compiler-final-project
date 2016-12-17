@@ -1,11 +1,13 @@
 {
-	var b : integer;
+	var b : integer
     proc haha {
-   	  b := 1
+   	  ;
+      b := 1
    	  put b
     }
     proc hehe {
-   	  b := 2
+   	  ;
+      b := 2
    	  put b
     }
     ;

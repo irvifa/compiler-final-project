@@ -1,6 +1,7 @@
 {
-	var b : integer;
+	var b : integer
     proc haha {
+        ;
    	  if b > 0 then
         put b
         b := b - 1

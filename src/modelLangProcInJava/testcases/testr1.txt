@@ -1,5 +1,5 @@
 {
-	var b : integer;
+	var b : integer
     proc haha {
    	  var b : integer;
    	  b := 1
