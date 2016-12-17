@@ -1,0 +1,19 @@
+{
+	var b : integer;
+    proc haha {
+   	  var b : integer;
+   	  b := 1
+   	  put b
+    }
+    proc hehe {
+   	  var b : integer;
+   	  b := 2
+   	  put b
+    }
+    ;
+    b := 3
+    haha
+    put b
+    hehe
+    put b
+}
