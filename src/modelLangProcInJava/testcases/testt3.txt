@@ -1,11 +1,12 @@
-# Sementara gw letakin di sini dulu ya ini dari git web :(
-# Proc dalam Proc gagal luar
 {
-  proc luar {
-    ;
-    proc dalam {
-      put "dalam";
-    }
-  }
-  dalam
+  	proc luar {
+   	 	proc dalam {
+   	 		;
+      		put "dalam"
+    	}
+    	;
+    	dalam
+  	}
+  	;
+  	luar
 }

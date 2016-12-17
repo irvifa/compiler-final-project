@@ -1,12 +1,13 @@
-# Proc dalam Proc (exp: suc)
 {
   proc luar {
-    ;
     proc dalam {
-      put "dalam";
+    	;
+      	put "dalam"
     }
-    put "luar";
+    ;
+    put "luar"
     dalam
   }
+  ;
   luar
 }
