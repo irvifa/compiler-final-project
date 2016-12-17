@@ -1,0 +1,39 @@
+# Sementara gw letakin di sini dulu ya ini dari git web :(
+
+# Lokal vs Global var (exp: 5)
+{
+	var a : integer
+  ;
+  proc nyan {
+    var a : integer
+    ;
+    a := 3
+  }
+  a := 5
+  nyan
+  put a
+}
+
+# Proc dalam Proc (exp: suc)
+{
+  proc luar {
+    ;
+    proc dalam {
+      put "dalam";
+    }
+    put "luar";
+    dalam
+  }
+  luar
+}
+
+# Proc dalam Proc gagal luar
+{
+  proc luar {
+    ;
+    proc dalam {
+      put "dalam";
+    }
+  }
+  dalam
+}
