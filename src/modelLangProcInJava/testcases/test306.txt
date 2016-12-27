@@ -1,0 +1,16 @@
+{ 	var x : integer
+    integer func fa = {
+        var a : integer
+        var b : integer;
+        a := 7
+        b := 2
+        put "a ",a," b ",b;
+        
+        a * b
+        }
+    ;
+    put "func non standard a*b ", fa
+    if fa=14 then
+       put "--ok--"
+    end if
+}

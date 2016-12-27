@@ -1,0 +1,8 @@
+proc nested 
+y in main 2
+C in a1 0
+x in a1 3
+x in a 3
+ x after calling a 3
+ x + y -- 5
+--ok--

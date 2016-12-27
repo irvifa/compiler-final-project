@@ -1,0 +1,35 @@
+{
+	integer func yay = {
+    	integer func yay = {
+            integer func yay = {
+                integer func yay = {
+                    integer func yay = {
+                        var dummy : integer
+                        ;
+                        ;
+                        4
+                    }
+                    ;
+                    put yay
+                    ;
+                    3
+                }
+                ;
+                put yay
+                ;
+                2
+            }
+            ;
+            put yay
+            ;
+            1
+        }
+        ;
+        put yay
+        ;
+        0
+    }
+    ;
+
+    put yay
+}

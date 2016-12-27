@@ -1,0 +1,9 @@
+{
+	var a: integer
+	integer func d = 2*a
+	var b: integer;
+	a:=2
+	b:=3
+	a:=a+b*d
+	put a
+}

@@ -1,0 +1,29 @@
+{   var x : integer
+
+    integer func a =
+	{ var c : integer;
+          c :=2
+          x := x+c
+          put "c in a ",c
+          put "x in a ",x
+          if x < 6 then
+            c:=2*x+a
+            put "c in a after condition ",c
+          end if
+          ;
+          c
+
+	}
+
+    var y : integer;
+
+    put "func recursive "
+    x := 2
+    put " --- x before calling a ",x
+    x :=x+a
+    put " --- x after calling a ",x
+    if x=12 then
+       put "--ok--"
+    end if
+    
+}

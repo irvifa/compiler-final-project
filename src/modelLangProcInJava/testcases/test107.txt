@@ -1,0 +1,9 @@
+{
+	integer proc x = {
+		;
+		;
+		2
+	}
+	;
+	put x
+}

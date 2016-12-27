@@ -1,0 +1,11 @@
+{
+    integer func x = {
+        var dummy : integer
+        ;
+        ;
+        2
+    }
+    ;
+
+    put x
+}

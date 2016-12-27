@@ -1,0 +1,6 @@
+before proc + proc/func - x 14
+a
+after calling a - x 28
+b
+after calling b - x 56
+--ok--

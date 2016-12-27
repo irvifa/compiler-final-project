@@ -1,0 +1,14 @@
+{
+	var a: integer
+	proc b {
+		var c: integer
+		;
+		
+		a := 2
+	}
+	;
+
+	a:=1
+	b
+	put a
+}

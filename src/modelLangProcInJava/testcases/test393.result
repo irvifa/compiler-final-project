@@ -1,0 +1,9 @@
+func recursive 
+ --- x before calling a 2
+c in a 2
+x in a 4
+c in a 2
+x in a 6
+c in a after condition 10
+ --- x after calling a 12
+--ok--

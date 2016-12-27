@@ -1,0 +1,17 @@
+{
+	proc b {
+		proc b {
+			;
+			put "LEVEL 2"
+		}
+		;
+
+		b
+		put "LEVEL 1"
+	}
+	;
+
+	b
+	put "LEVEL 0"
+}
+

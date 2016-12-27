@@ -1,0 +1,11 @@
+{ 	var x : integer
+    integer func fa = x * 2
+    ;
+
+    x := 7
+    put " before calling func standard  x ",x
+    put " after calling fa ", fa
+    if fa=14 then
+      put "--ok--"
+    end if
+}
