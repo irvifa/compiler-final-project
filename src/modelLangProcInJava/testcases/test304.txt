@@ -1,0 +1,22 @@
+{ 	var x : integer
+    proc b
+	{ ;
+	  x := x + 28
+	  put "b"
+	}  
+    proc a
+	{ var c : integer;
+	  x := x + 14
+	  put "a"
+	}
+	;
+        x := 14
+        put "before proc + proc/func - x ",x
+	a
+        put "after calling a - x ",x
+	b
+	put "after calling b - x ",x
+        if x=56 then
+           put "--ok--"
+        end if
+}

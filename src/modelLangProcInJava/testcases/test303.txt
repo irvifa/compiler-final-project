@@ -1,0 +1,13 @@
+ {  var x : integer
+    proc a
+	{ ;
+	  x := 14
+	  put "in proc a - x ",x
+	}  	;
+        put "before calling - proc standard "
+	a
+	put "after calling x ",x
+        if x=14 then
+           put "--ok--"
+        end if
+}

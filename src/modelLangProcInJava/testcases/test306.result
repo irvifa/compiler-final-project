@@ -1,0 +1,4 @@
+func non standard a*b a 7 b 2
+14
+a 7 b 2
+--ok--

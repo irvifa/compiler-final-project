@@ -1,0 +1,4 @@
+before calling - proc standard 
+in proc a - x 14
+after calling x 14
+--ok--
