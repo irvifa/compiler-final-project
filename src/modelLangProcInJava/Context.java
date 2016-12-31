@@ -19,6 +19,9 @@ class Context {
 
     private final int HASH_SIZE = 211;
     private final int INIT = -1;
+    // based on scoping(?)
+    private final int MODIF_FUNC = 3;
+    private final int MODIF_PROC = 2;
 
     public static int lexicalLevel;
     public static int orderNumber;
@@ -36,13 +39,13 @@ class Context {
     public int temp;
 
     // current func or proc yang dipanggil
-    public int currCallName;
+    public String currCallName;
     // current param count
     public int currNumberOfParams;
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
     // Stack nama fungsi dan prosedur
-    public static Stack<Integer> callNameStack;
+    public static Stack<String> callNameStack;
     // Stack untuk melakukan penghitungan jumlah params
     public static Stack<Integer> numberOfParamsStack;
 
@@ -53,7 +56,7 @@ class Context {
         symbolStack = new Stack();
         typeStack = new Stack();
         orderNumberStack = new Stack<Integer>();
-        callNameStack = new Stack<Integer>();
+        callNameStack = new Stack<String>();
         numberOfParamsStack = new Stack<Integer>();
         printSymbols = false;
         errorCount = 0;
@@ -289,7 +292,7 @@ class Context {
                 currNumberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
                 if(currNumberOfParams!=0) {
                     System.out.println("Function or Procedure isn't expected to have parameter(s) at line " + currentLine + ": " + currentStr);
-                    System.out.println("But, " + currNumberOfParams + " parameter(s) was found.")
+                    System.out.println("But, " + currNumberOfParams + " parameter(s) was found.");
                     errorCount++;
                 }
                 break;
@@ -307,21 +310,30 @@ class Context {
                 */
                 currNumberOfParams = numberOfParamsStack.peek();
                 int numberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
-                if(currNumberOfParams > numberOfParams || currNumberOfParams < numberOfParams) {
-                    System.out.println("Parameter mismatched, found: " + currNumberOfParams + " expected, " + numberOfParams + " for: " + ((String)symbolStack.peek()));
+                if(currNumberOfParams != numberOfParams) {
+                    System.out.println("Number of parameters mismatched, found: " + currNumberOfParams + " expected, " + numberOfParams + " for: " + ((String)symbolStack.peek()));
                     System.exit(1);
                 } else {
-                    int paramType = symbolHash.find((String)symbolHash.peek()).getListOfParams().get(numberOfParams-1).getIdType();
+                    int paramType = symbolHash.find((String)symbolStack.peek()).getListOfParams().get(numberOfParams-1).getIdType();
                     int exprType = ((Integer)typeStack.peek()).intValue();
                 
-                    if(paramType!=exprType) {
-                        System.out.println("Argument " + paramCount + " type mismatch at line " + currentLine + ": " + currentStr);
+                    if(paramType != exprType) {
+                        System.out.println("Argument " + numberOfParams + " type mismatch at line " + currentLine + ": " + currentStr);
                         errorCount++;
                     }
                 }
                 break;
             case 32:
-                //
+                /*
+                * IRVI
+                * Periksa bahwa semua args sudah dilihat
+                */
+                currNumberOfParams = numberOfParamsStack.pop();
+                numberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
+                if(currNumberOfParams != numberOfParams) {
+                    System.out.println("Number of parameters mismatched, found: " + currNumberOfParams + " expected, " + numberOfParams + " for: " + ((String)symbolStack.peek()));
+                    System.exit(1);
+                }
                 break;
             case 33:
                 /**
@@ -338,10 +350,21 @@ class Context {
                 }
                 break;
             case 34:
-                // TODO
+                /*
+                * IRVI
+                * inc num of params
+                */
+                currNumberOfParams = numberOfParamsStack.pop();
+                currNumberOfParams++;
+                numberOfParamsStack.push(currNumberOfParams);
                 break;
             case 35:
-                // TODO
+                /*
+                * insert all params to table symbol
+                */
+                currCallName = callNameStack.peek();
+                currNumberOfParams = numberOfParamsStack.peek();
+                symbolHash.find(currCallName).setNumberOfParams(currNumberOfParams);
                 break;
             case 36:
                 /**
@@ -380,14 +403,43 @@ class Context {
                 */
                 break;
             case 50:
+                /*
+                * backup ON
+                */
                 orderNumberStack.push(orderNumber);
                 break;
             case 51:
+                /*
+                * balikin ON
+                */
                 orderNumber = orderNumberStack.pop();
                 break;
             case 52:
                 currBaseAddr = Generate.cell;
                 symbolHash.find(currentStr).setBaseAddress(currBaseAddr);
+                break;
+            case 53:
+                /*
+                * Beres-beres kalau udah kelar dari fungsi(?)
+                */
+                numberOfParamsStack.pop();
+                callNameStack.pop();
+                break;
+            case 54:
+                /*
+                * Beres-beres  
+                */
+                currCallName = callNameStack.peek();
+                temp = symbolHash.find((String)symbolStack.peek()).getIdKind();
+                numberOfParams = symbolHash.find((String)currCallName).getNumberOfParams();
+                LinkedList<Bucket> listOfParams = symbolHash.find((String)currCallName).getListOfParams();
+                for(Bucket b : listOfParams) {
+                    int od = b.getOrderNum();
+                    int dec = numberOfParams;
+                    if(temp==Bucket.FUNCTION) dec += MODIF_FUNC;
+                    else dec += MODIF_PROC;
+                    b.setOrderNum(od - dec);
+                }
                 break;
             
         }
