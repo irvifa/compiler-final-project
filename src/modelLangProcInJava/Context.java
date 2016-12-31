@@ -13,6 +13,7 @@
  */
 
 import java.util.Stack;
+import java.util.LinkedList;
 
 class Context {
 
@@ -29,10 +30,21 @@ class Context {
     public static int currBaseAddr;
     private boolean printSymbols;
     public int errorCount;
+    
+    // tipe fungsi
     public int functionType;
     public int temp;
+
+    // current func or proc yang dipanggil
+    public int currCallName;
+    // current param count
+    public int currNumberOfParams;
     // Stack untuk memasukkan ON sebelum masuk bagian pemanggilan func/proc
     public static Stack<Integer> orderNumberStack;
+    // Stack nama fungsi dan prosedur
+    public static Stack<Integer> callNameStack;
+    // Stack untuk melakukan penghitungan jumlah params
+    public static Stack<Integer> numberOfParamsStack;
 
     public Context() {
         lexicalLevel = INIT;
@@ -41,6 +53,8 @@ class Context {
         symbolStack = new Stack();
         typeStack = new Stack();
         orderNumberStack = new Stack<Integer>();
+        callNameStack = new Stack<Integer>();
+        numberOfParamsStack = new Stack<Integer>();
         printSymbols = false;
         errorCount = 0;
     }
@@ -224,9 +238,17 @@ class Context {
                 * Masukkan procedure ke dalam symbol table
                 */
                 symbolHash.find(currentStr).setIdKind(Bucket.PROCEDURE);
+                symbolHash.find(currentStr).setListOfParams(new LinkedList<Bucket>());
+                callNameStack.push(currentStr);
                 break;
             case 25:
-                // TODO
+                /**
+                * IRVI
+                * tambahkan param sekarang ke dalam list of param func or func
+                */
+                currCallName = callNameStack.peek();
+                Bucket currParam = symbolHash.find(currentStr);
+                symbolHash.find(currCallName).getListOfParams().add(currParam);
                 break;
             case 26:
                 /**
@@ -234,9 +256,16 @@ class Context {
                 * Masukkan function ke dalam symbol table
                 */
                 symbolHash.find(currentStr).setIdKind(Bucket.FUNCTION);
+                symbolHash.find(currentStr).setListOfParams(new LinkedList<Bucket>());
+                callNameStack.push(currentStr);
                 break;
             case 27:
-                // TODO
+                /* 
+                * IRVI
+                * Dec nilai counter LL dan set nilai ON ke semula agar ketika ada var local sama bisa
+                */
+                C(2);
+                C(51);
                 break;
             case 28:
                 /**
@@ -253,16 +282,46 @@ class Context {
                 }
                 break;
             case 29:
-                // TODO
+                /*
+                * IRVI
+                * Cek func or proc nggak punya param
+                */
+                currNumberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
+                if(currNumberOfParams!=0) {
+                    System.out.println("Function or Procedure isn't expected to have parameter(s) at line " + currentLine + ": " + currentStr);
+                    System.out.println("But, " + currNumberOfParams + " parameter(s) was found.")
+                    errorCount++;
+                }
                 break;
             case 30:
-                // TODO
+                /*
+                * IRVI
+                * push jumlah args 0
+                */
+                numberOfParamsStack.push(0);
                 break;
             case 31:
-                // TODO
+                /*
+                * IRVI
+                * Check args for each params
+                */
+                currNumberOfParams = numberOfParamsStack.peek();
+                int numberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
+                if(currNumberOfParams > numberOfParams || currNumberOfParams < numberOfParams) {
+                    System.out.println("Parameter mismatched, found: " + currNumberOfParams + " expected, " + numberOfParams + " for: " + ((String)symbolStack.peek()));
+                    System.exit(1);
+                } else {
+                    int paramType = symbolHash.find((String)symbolHash.peek()).getListOfParams().get(numberOfParams-1).getIdType();
+                    int exprType = ((Integer)typeStack.peek()).intValue();
+                
+                    if(paramType!=exprType) {
+                        System.out.println("Argument " + paramCount + " type mismatch at line " + currentLine + ": " + currentStr);
+                        errorCount++;
+                    }
+                }
                 break;
             case 32:
-                // TODO
+                //
                 break;
             case 33:
                 /**
