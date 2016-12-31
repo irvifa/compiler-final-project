@@ -267,8 +267,8 @@ class Context {
                 * IRVI
                 * Dec nilai counter LL dan set nilai ON ke semula agar ketika ada var local sama bisa
                 */
-                C(2);
                 C(51);
+                C(2);
                 break;
             case 28:
                 /**
@@ -290,7 +290,7 @@ class Context {
                 * Cek func or proc nggak punya param
                 */
                 currNumberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
-                if(currNumberOfParams!=0) {
+                if(currNumberOfParams != 0) {
                     System.out.println("Function or Procedure isn't expected to have parameter(s) at line " + currentLine + ": " + currentStr);
                     System.out.println("But, " + currNumberOfParams + " parameter(s) was found.");
                     errorCount++;
@@ -310,8 +310,9 @@ class Context {
                 */
                 currNumberOfParams = numberOfParamsStack.peek();
                 int numberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
-                if(currNumberOfParams != numberOfParams) {
+                if(currNumberOfParams > numberOfParams) {
                     System.out.println("Number of parameters mismatched, found: " + currNumberOfParams + " expected, " + numberOfParams + " for: " + ((String)symbolStack.peek()));
+                    errorCount++;
                     System.exit(1);
                 } else {
                     int paramType = symbolHash.find((String)symbolStack.peek()).getListOfParams().get(numberOfParams-1).getIdType();
@@ -332,6 +333,7 @@ class Context {
                 numberOfParams = symbolHash.find((String)symbolStack.peek()).getNumberOfParams();
                 if(currNumberOfParams != numberOfParams) {
                     System.out.println("Number of parameters mismatched, found: " + currNumberOfParams + " expected, " + numberOfParams + " for: " + ((String)symbolStack.peek()));
+                    errorCount++;
                     System.exit(1);
                 }
                 break;
@@ -422,8 +424,8 @@ class Context {
                 /*
                 * Beres-beres kalau udah kelar dari fungsi(?)
                 */
-                numberOfParamsStack.pop();
                 callNameStack.pop();
+                numberOfParamsStack.pop();
                 break;
             case 54:
                 /*
@@ -432,7 +434,7 @@ class Context {
                 currCallName = callNameStack.peek();
                 temp = symbolHash.find((String)symbolStack.peek()).getIdKind();
                 numberOfParams = symbolHash.find((String)currCallName).getNumberOfParams();
-                LinkedList<Bucket> listOfParams = symbolHash.find((String)currCallName).getListOfParams();
+                LinkedList<Bucket> listOfParams = symbolHash.find(currCallName).getListOfParams();
                 for(Bucket b : listOfParams) {
                     int od = b.getOrderNum();
                     int dec = numberOfParams;

@@ -28,6 +28,12 @@ class Generate {
     * ini dibutuhkan untuk set base adress-nya dari Context.java
     */
     public static int ll, on, top, addr, kode, cell;
+
+    // current func or proc yang dipanggil
+    public String currCallName;
+    // current param count
+    public int currNumberOfParams;
+    
     private String currConst;
 
     public Generate() {
@@ -724,13 +730,60 @@ class Generate {
                 break;
 
             case 42:
-                HMachine.memory[cell] = HMachine.BR;
-                cell = cell + 1;
+                currCallName = Context.callNameStack.peek();
+                currNumberOfParams = Context.symbolHash.find(currCallName).getNumberOfParams();
+                if(currNumberOfParams == 0) {
+                    HMachine.memory[cell] = HMachine.BR;
+                    cell = cell + 1;
+                } else {
+                    HMachine.memory[cell] = HMachine.PUSHMT;
+                    HMachine.memory[cell+1] = HMachine.PUSH;
+                    HMachine.memory[cell+2] = currNumberOfParams + 1;
+                    HMachine.memory[cell+3] = HMachine.SUB;
+                    HMachine.memory[cell+4] = HMachine.FLIP;
+                    HMachine.memory[cell+5] = HMachine.STORE;
+                    HMachine.memory[cell+6] = HMachine.PUSH;
+                    HMachine.memory[cell+7] = currNumberOfParams - 1;
+                    HMachine.memory[cell+8] = HMachine.POP;
+                    HMachine.memory[cell+9] = HMachine.BR;
+                    cell = cell + 10;
+                }
                 break;
             case 43:
-                HMachine.memory[cell] = HMachine.FLIP;
-                HMachine.memory[cell+1] = HMachine.BR;
-                cell = cell + 2;
+                currCallName = Context.callNameStack.peek();
+                currNumberOfParams = Context.symbolHash.find(currCallName).getNumberOfParams();
+                if(currNumberOfParams == 0) {
+                    HMachine.memory[cell] = HMachine.FLIP;
+                    HMachine.memory[cell+1] = HMachine.BR;
+                    cell = cell + 2;
+                } else if(currNumberOfParams == 1) {
+                    HMachine.memory[cell] = HMachine.PUSHMT;
+                    HMachine.memory[cell+1] = HMachine.PUSH;
+                    HMachine.memory[cell+2] = 3;
+                    HMachine.memory[cell+3] = HMachine.SUB;
+                    HMachine.memory[cell+4] = HMachine.FLIP;
+                    HMachine.memory[cell+5] = HMachine.STORE;
+                    HMachine.memory[cell+6] = HMachine.BR;
+                    cell = cell + 7;
+                } else {
+                    HMachine.memory[cell] = HMachine.PUSHMT;
+                    HMachine.memory[cell+1] = HMachine.PUSH;
+                    HMachine.memory[cell+2] = currNumberOfParams + 2;
+                    HMachine.memory[cell+3] = HMachine.SUB;
+                    HMachine.memory[cell+4] = HMachine.FLIP;
+                    HMachine.memory[cell+5] = HMachine.STORE;
+                    HMachine.memory[cell+6] = HMachine.PUSHMT;
+                    HMachine.memory[cell+7] = HMachine.PUSH;
+                    HMachine.memory[cell+8] = currNumberOfParams;
+                    HMachine.memory[cell+9] = HMachine.SUB;
+                    HMachine.memory[cell+10] = HMachine.FLIP;
+                    HMachine.memory[cell+11] = HMachine.STORE;
+                    HMachine.memory[cell+12] = HMachine.PUSH;
+                    HMachine.memory[cell+13] = currNumberOfParams - 2;
+                    HMachine.memory[cell+14] = HMachine.POP;
+                    HMachine.memory[cell+15] = HMachine.BR;
+                    cell = cell + 16;
+                }
                 break;
             case 44:
                 // push return address (next pc)

@@ -1,0 +1,10 @@
+{
+	proc nyan(a:integer, b:integer) {
+		;
+		put a
+		put b
+		put a+b
+	}
+	;
+	nyan(1, 2)
+}

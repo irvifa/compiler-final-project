@@ -1,0 +1,12 @@
+{
+    proc nyan(b : integer) {
+        ;
+   	  if b > 0 then
+        put b
+        b := b - 1
+        nyan(b)
+      end if
+    }
+    ;
+    nyan(3)
+}
