@@ -1,0 +1,7 @@
+{
+    var a: integer
+    var b: integer
+    var c: integer
+    ;
+    put 5%2
+}
