@@ -722,37 +722,18 @@ class Generate {
             case 53:
                 stackPush(loopMarker, R51R52Stack);
                 break;
-<<<<<<< HEAD
-            
-            /**
-            * TERE
-            * Construct instruction for return from procedure
-            */
-=======
 
-            // R42: construct instruction for return from procedure
->>>>>>> 92f125d2b743282d5842482f383f80555d4bb288
             case 42:
                 HMachine.memory[cell] = HMachine.BR;
                 cell = cell + 1;
                 break;
-<<<<<<< HEAD
-            
-            /**
-            * TERE
-            * Construct instruction for return from function
-            */
-=======
 
-            // R43: construct instruction for return from function
->>>>>>> 92f125d2b743282d5842482f383f80555d4bb288
             case 43:
                 HMachine.memory[cell] = HMachine.FLIP;
                 HMachine.memory[cell+1] = HMachine.BR;
                 cell = cell + 2;
                 break;
 
-<<<<<<< HEAD
             /**
             * IRVI
             * Construct instruction for call procedure
