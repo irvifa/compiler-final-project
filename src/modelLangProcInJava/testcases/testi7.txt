@@ -1,0 +1,15 @@
+{
+  integer func nyan(a:integer) = {
+    var b : integer
+    ;
+    if a > 1 then
+      b := a * nyan(a-1)
+    else 
+      b := a
+    end if
+    ;
+    b
+  }
+  ;
+  put nyan(5)
+}

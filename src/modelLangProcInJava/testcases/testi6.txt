@@ -1,0 +1,15 @@
+{
+    proc nyan(x: integer, y : integer) {
+      var tmp : integer
+      ;
+   	  if y = 1 then
+        put x
+      else
+      	tmp := x*y
+      	y := y - 1
+      	nyan(tmp, y)
+      end if
+    }
+    ;
+    nyan(1,4)
+}
