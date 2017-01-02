@@ -1,0 +1,33 @@
+{
+	var maxrow:integer
+	;
+	maxrow := 3
+	{
+		var row:integer
+		var col:integer
+		var manip:integer
+		;
+		row := 1
+		% looping untuk 'baris'
+		loop
+			% looping untuk 'kolom'
+			col := 1
+			manip := row
+			
+			repeat
+				manip := manip * 10
+				col := col + 1
+			until (col > row)
+			
+			put manip
+			
+			% increment or exit
+			row := row + 1
+			if (row > maxrow) then
+				exit
+			end if
+			
+		end loop
+	}
+}
+	

@@ -1,0 +1,35 @@
+{
+	proc b {
+		proc b {
+			proc b {
+				proc b {
+					proc b {
+						;
+						put "LEVEL 5"
+					}
+					;
+
+					b
+					put "LEVEL 4"
+				}
+				;
+				
+				b
+				put "LEVEL 3"
+			}
+			;
+
+			b
+			put "LEVEL 2"
+		}
+		;
+
+		b
+		put "LEVEL 1"
+	}
+	;
+
+	b
+	put "LEVEL 0"
+}
+

@@ -1,0 +1,10 @@
+{
+	proc nyan {
+		var b : integer;
+		b:= 15
+		put b
+	}
+	;
+
+	nyan
+}

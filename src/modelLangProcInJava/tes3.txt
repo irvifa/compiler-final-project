@@ -1,6 +1,0 @@
-{
-  var A   : integer
-  integer func satu = 1;
-
-  put "Ok!"
-}

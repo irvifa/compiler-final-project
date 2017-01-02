@@ -1,0 +1,14 @@
+{
+	var b: integer
+	integer func nyan = {
+		var a: integer
+		var c: integer
+		;
+		c:= 7 
+		a:= c+b; 
+		a
+	}
+	;
+	b:= 5
+	put nyan
+}

@@ -1,0 +1,6 @@
+{
+    integer func nyan = 1
+    integer func nyan2 = nyan + nyan;
+
+    put nyan2
+}

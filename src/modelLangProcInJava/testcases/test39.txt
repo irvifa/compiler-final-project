@@ -1,0 +1,16 @@
+{
+  	proc kucinggendut {
+   	 	proc nyan {
+   	 		;
+      		put "nyan"
+    	}
+      proc nyan {
+        ;
+          put "nyan2"
+      }
+    	;
+    	nyan
+  	}
+  	;
+  	kucinggendut
+}

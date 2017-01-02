@@ -1,0 +1,14 @@
+{
+	var b : integer
+    proc haha {
+        ;
+   	  if b > 0 then
+        put b
+        b := b - 1
+        haha
+      end if
+    }
+    ;
+    b := 3
+    haha
+}

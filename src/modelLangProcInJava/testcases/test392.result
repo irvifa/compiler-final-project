@@ -1,0 +1,8 @@
+proc recursive 
+ --- x before calling a 2
+c in a 2
+x in a 4
+c in a 2
+x in a 6
+ --- x after calling a 6
+--ok--

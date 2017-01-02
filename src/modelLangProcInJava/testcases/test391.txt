@@ -1,0 +1,30 @@
+{   var x : integer
+
+    proc a
+	{ var c : integer
+          proc a1
+          { var c : integer;
+           c := 0
+           put "C in a1 ",c
+           x := c+3
+           put "x in a1 ",x
+          }
+          ;
+          a1
+          put "x in a ",x
+	}
+
+    var y : integer;
+
+    y := 2
+    put "proc nested "
+    put "y in main ",y
+    a
+    put " x after calling a ",x
+    put " x + y -- ",x+y
+    if x+y=5 then
+       put "--ok--"
+    end if
+    
+
+}

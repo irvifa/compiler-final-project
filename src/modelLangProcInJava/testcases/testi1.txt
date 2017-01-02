@@ -1,0 +1,4 @@
+{
+	integer func nyan(a:integer) = 1 + a;
+	put nyan(1)
+}

@@ -1,0 +1,19 @@
+{
+	var x : integer
+	var zzz : integer
+
+    integer func y = {
+    	var x : integer
+        ;
+        
+        x := 1
+        ;
+        
+        0
+    }
+    ;
+
+    x := 2
+    zzz := y
+    put x
+}

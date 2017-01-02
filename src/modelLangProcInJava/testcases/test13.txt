@@ -1,0 +1,10 @@
+{
+	var a:integer;
+	a:=16
+	loop
+
+	if a > 12 then a:=a-1 put a
+	else exit
+	end if
+	end loop
+}

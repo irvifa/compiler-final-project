@@ -1,0 +1,9 @@
+{
+	var a:integer;
+	a:=16
+	repeat
+	a:=a/2
+	put a
+	exit
+	until a>2
+}

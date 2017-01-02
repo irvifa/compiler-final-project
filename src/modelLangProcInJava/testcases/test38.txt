@@ -1,0 +1,12 @@
+{
+	var a: integer
+	integer func nyan_reader = {
+		var f: integer
+		;
+		get f; 
+		f
+	}
+	;
+	a:=nyan_reader
+	put a
+}

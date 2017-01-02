@@ -1,0 +1,25 @@
+{   var x : integer
+
+    proc a
+	{ var c : integer;
+          c :=2
+          x := x+c
+          put "c in a ",c
+          put "x in a ",x
+          if x < 6 then
+            a
+          end if
+
+	}
+
+    var y : integer;
+    put "proc recursive "
+    x := 2
+    put " --- x before calling a ",x
+    a
+    put " --- x after calling a ",x
+    if x=6 then
+      put "--ok--"
+    end if
+    
+}
