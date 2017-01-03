@@ -1,0 +1,12 @@
+{
+	var a: integer
+	proc nyan(a:integer) {
+   	 ;
+   	 put a
+   	 a := 3
+    }
+    ;
+    a := 2
+    nyan(1)
+    put a
+}
