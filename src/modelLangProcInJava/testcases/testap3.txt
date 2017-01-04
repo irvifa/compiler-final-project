@@ -1,0 +1,8 @@
+{
+  integer func a(a:integer) = {
+  	var a:integer;
+  	;
+  	a
+  };
+  put a(123)
+}

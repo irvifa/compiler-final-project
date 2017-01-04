@@ -1,0 +1,11 @@
+{
+  integer func a(b:integer) = {
+  	var x:integer
+  	integer func b(c:integer) = c
+  	;
+  	;
+  	b + b(1000)
+  }
+  ;
+  put a(123)
+}

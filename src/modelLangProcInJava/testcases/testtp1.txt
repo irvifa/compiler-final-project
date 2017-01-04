@@ -1,0 +1,5 @@
+{
+  integer func b(a:integer) = a
+  boolean func b(c:integer) = c > 0;
+  put b(123)
+}

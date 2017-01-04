@@ -1,0 +1,4 @@
+{
+	integer func a(a:integer) = a;
+  put a(123)
+}
