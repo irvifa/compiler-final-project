@@ -1,25 +1,14 @@
-# How To
+# Usage
 
-Karena udah sesuai sama tree yang ada bisa di skip :D
-
-```bash
-chmod +x run
-./run
-```
-
-Kerjain ini aja
+Use this command to compile the model
 
 ```bash
 cd modelLangProcInJava
 chmod +x compile
 ./compile
 ```
-Untuk menajalankan `testcase`
+Use this command tu run the `testcases`
 
 ```bash
-./testcase <nomor-tc>
+./testcase <testcase-id>
 ```
-
-# Laporan
-
-Ada di [link ini] (https://docs.google.com/document/d/1RBS3qkAacS3P7sokVitAMczSObr9jNWOo2uMxEVuTKA/edit#heading=h.wixhfi83fxq6) ya~
